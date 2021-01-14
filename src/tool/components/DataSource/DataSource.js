@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import classNames from "clsx";
 import { Chart } from "react-google-charts";
 import { Container, Col, Form, Row } from "react-bootstrap";
-import { checkIfUrlIsValid, parseChartData } from "./utils";
+import { checkIfUrlIsValid } from "./utils";
 import styles from "./DataSource.module.scss";
 
 export const DataSource = () => {
-  const [dataSourceUrl, setDataSourceUrl] = useState("")
-  const [isValidUrl, setIsValidUrl] = useState(null)
+  const [dataSourceUrl, setDataSourceUrl] = useState("");
+  const [isValidUrl, setIsValidUrl] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const checkUrl = async (url) => {
       if (url === "") {
         setIsValidUrl(null)
+        setData(null)
       } else {
         const isValid = await checkIfUrlIsValid(url)
         setIsValidUrl(isValid)
+
+        if (!isValid) {
+          setData(null)
+        }
       }
     }
 
@@ -42,18 +48,27 @@ export const DataSource = () => {
       {isValidUrl && (
         <div className={styles.chartLoader}>
           <Chart
-            chartType="LineChart"
+            chartType="BarChart"
             spreadSheetUrl={dataSourceUrl}
             chartEvents={[
               {
                 eventName: "ready",
                 callback: ({ chartWrapper }) => {
-                  parseChartData(chartWrapper)
+                  const chartData = chartWrapper.getDataTable();
+                  setData(chartData.toJSON());
                 }
               }
             ]}
           />
         </div>
+      )}
+      {data && (
+        <Row className="ml-2">
+          <Chart
+            chartType="Table"
+            data={JSON.parse(data)}
+          />
+        </Row>
       )}
     </Container>
   )

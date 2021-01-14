@@ -17,16 +17,3 @@ export const checkIfUrlIsValid = async (url) => {
 
   return status;
 }
-
-export const parseChartData = (chartWrapper) => {
-  console.log({ chartWrapper })
-  // const chartData = chartWrapper.getDataTable()
-  // if (JSON.stringify(data) !== JSON.stringify(chartData)) {
-  //   console.log(chartWrapper)
-  //   console.log({
-  //     options: chartWrapper.getOptions(),
-  //     type: chartWrapper.getChartType(),
-  //   })
-  //   setData(chartData)
-  // }
-}
