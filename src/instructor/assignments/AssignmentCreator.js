@@ -16,8 +16,8 @@ import ToggleSwitch from "../../app/components/ToggleSwitch";
 import QuizCreator from "../../tool/QuizCreator";
 import ConfirmationModal from "../../app/components/ConfirmationModal";
 import {reportError} from "../../developer/DevUtils";
-import {createAssignmentInLms, handleConnectToLMS} from "../../lmsConnection/RingLeader";
-import {calcMaxScoreForAssignment} from "../../tool/ToolUtils";
+import {/*createAssignmentInLms,*/ handleConnectToLMS} from "../../lmsConnection/RingLeader";
+// import {calcMaxScoreForAssignment} from "../../tool/ToolUtils";
 
 const emptyAssignment = {
   id: '',
@@ -108,6 +108,8 @@ function AssignmentCreator() {
             <p>Assignment has been saved! In order to access it, use this assignmentId: ${activeModal.id}</p>
           </ConfirmationModal>
         );
+      default:
+        return null;
     }
   }
 

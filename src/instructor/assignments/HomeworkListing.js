@@ -34,7 +34,7 @@ function HomeworkListing(props) {
   }, [props.students, studentsPerPage])
 
   useEffect(function rePaginateList() {
-    console.log(`pageCount: ${pageCount}`);
+    // console.log(`pageCount: ${pageCount}`);
     if (pageCount <= 5) {
       let newPageBtns = new Array(pageCount).fill(-1);
       setPageBtns(newPageBtns.map((b, i) => i));
@@ -50,6 +50,7 @@ function HomeworkListing(props) {
 
     const shown = sortedStudents.filter((s, i) => i >= (topStudentIndex) && i < topStudentIndex + studentsPerPage)
     setShownStudents(shown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.students, pageCount, sortBy, curPageNum, isHideStudentIdentity, activeUiScreenMode])
 
 

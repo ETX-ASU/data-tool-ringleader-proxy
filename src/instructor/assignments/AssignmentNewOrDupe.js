@@ -35,6 +35,7 @@ function AssignmentNewOrDupe() {
 
   useEffect(() => {
     fetchAssignmentList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -54,7 +55,7 @@ function AssignmentNewOrDupe() {
         allAssignments.push(...assignmentQueryResults.data.listAssignments.items);
       } while (nextTokenVal);
 
-      if (window.isDevMode) console.log("------> assignmentIds: ", allAssignments.map(a => a.id));
+      // if (window.isDevMode) console.log("------> assignmentIds: ", allAssignments.map(a => a.id));
       setAssignments(allAssignments);
       const stranded = allAssignments.filter(a => a.lineItemId === '');
       setStrandedAssignments(stranded);
@@ -132,6 +133,8 @@ function AssignmentNewOrDupe() {
             <p>Your assignment "{activeModal.data[0]}" has been recovered. You will now be taken to a screen so you can edit and customize this recovered assignment.</p>
           </ConfirmationModal>
         );
+      default:
+        return null;
     }
   }
 

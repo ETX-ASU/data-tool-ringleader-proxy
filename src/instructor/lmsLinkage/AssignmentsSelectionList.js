@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {API} from 'aws-amplify';
+import React /*, {useState}*/ from 'react';
+// import {API} from 'aws-amplify';
 import LoadingIndicator from "../../app/components/LoadingIndicator";
 import {Col, Container, Row, Button} from "react-bootstrap";
-import AssignmentListItem from "./AssignmentListItem";
+// import AssignmentListItem from "./AssignmentListItem";
 import {createAssignmentInLms} from "../../lmsConnection/RingLeader";
-import {updateAssignment} from "../../graphql/mutations";
+// import {updateAssignment} from "../../graphql/mutations";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCopy} from "@fortawesome/free-solid-svg-icons";
+// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+// import {faCopy} from "@fortawesome/free-solid-svg-icons";
 import {reportError} from "../../developer/DevUtils";
 
 function AssignmentsSelectionList(props) {

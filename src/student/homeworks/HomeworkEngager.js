@@ -113,6 +113,8 @@ function HomeworkEngager(props) {
             <p>You can now review your submitted assignment.</p>
           </ConfirmationModal>
         )
+      default:
+        return null;
     }
   }
 

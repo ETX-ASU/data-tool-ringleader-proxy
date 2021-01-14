@@ -32,6 +32,7 @@ function StudentDashboard() {
     } else if (assignment.id) {
       fetchAndSetHomework();
     }
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [assignment, homework]);
 
 
