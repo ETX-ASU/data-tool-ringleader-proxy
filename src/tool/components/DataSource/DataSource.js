@@ -5,7 +5,7 @@ import { Container, Col, Form, Row } from "react-bootstrap";
 import { checkIfUrlIsValid } from "./utils";
 import styles from "./DataSource.module.scss";
 
-export const DataSource = () => {
+export const DataSource = ({ onUpdate }) => {
   const [dataSourceUrl, setDataSourceUrl] = useState("");
   const [isValidUrl, setIsValidUrl] = useState(null);
   const [data, setData] = useState(null);
@@ -27,6 +27,13 @@ export const DataSource = () => {
 
     checkUrl(dataSourceUrl)
   }, [dataSourceUrl])
+
+  useEffect(() => {
+    if (isValidUrl && data) {
+      onUpdate("tableData", data)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isValidUrl])
 
   return (
     <Container className="mt-2 ml-2 mr-2 mb-4">

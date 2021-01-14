@@ -30,7 +30,7 @@ export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolA
         onUpdate={handleUpdateConfig}
       />
       <AssignmentObjective objective={config.objective} onUpdate={handleUpdateConfig} />
-      <DataSource />
+      <DataSource onUpdate={handleUpdateConfig} />
     </Form>
   )
 }

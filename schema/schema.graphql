@@ -35,6 +35,7 @@ type ToolAssignmentData {
   dueDate: String
   minWordCount: Int
   maxScore: Int
+  tableData: String
 }
 
 type ToolHomeworkData {

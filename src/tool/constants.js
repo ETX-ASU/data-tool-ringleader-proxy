@@ -5,7 +5,8 @@ export const EMPTY_TOOL_ASSIGNMENT_DATA = {
   dueDate: "",
   minWordCount: MIN_WORD_COUNT,
   maxScore: MAX_SCORE,
-  objective: ""
+  objective: "",
+  tableData: ""
 }
 
 export const EMPTY_TOOL_HOMEWORK_DATA = {}

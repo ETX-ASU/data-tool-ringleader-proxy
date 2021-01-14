@@ -23,6 +23,7 @@ export const getAssignment = /* GraphQL */ `
         dueDate
         minWordCount
         maxScore
+        tableData
       }
       createdAt
       updatedAt
@@ -56,6 +57,7 @@ export const listAssignments = /* GraphQL */ `
           dueDate
           minWordCount
           maxScore
+          tableData
         }
         createdAt
         updatedAt

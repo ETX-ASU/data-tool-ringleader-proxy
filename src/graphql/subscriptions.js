@@ -23,6 +23,7 @@ export const onCreateAssignment = /* GraphQL */ `
         dueDate
         minWordCount
         maxScore
+        tableData
       }
       createdAt
       updatedAt
@@ -51,6 +52,7 @@ export const onUpdateAssignment = /* GraphQL */ `
         dueDate
         minWordCount
         maxScore
+        tableData
       }
       createdAt
       updatedAt
@@ -79,6 +81,7 @@ export const onDeleteAssignment = /* GraphQL */ `
         dueDate
         minWordCount
         maxScore
+        tableData
       }
       createdAt
       updatedAt
