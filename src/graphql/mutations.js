@@ -19,6 +19,8 @@ export const createAssignment = /* GraphQL */ `
       isLockedOnSubmission
       isUseAutoScore
       isUseAutoSubmit
+      isArchived
+      isFavorite
       toolAssignmentData {
         quizQuestions {
           questionText
@@ -51,6 +53,8 @@ export const updateAssignment = /* GraphQL */ `
       isLockedOnSubmission
       isUseAutoScore
       isUseAutoSubmit
+      isArchived
+      isFavorite
       toolAssignmentData {
         quizQuestions {
           questionText
@@ -83,6 +87,8 @@ export const deleteAssignment = /* GraphQL */ `
       isLockedOnSubmission
       isUseAutoScore
       isUseAutoSubmit
+      isArchived
+      isFavorite
       toolAssignmentData {
         quizQuestions {
           questionText

@@ -16,6 +16,8 @@ export const getAssignment = /* GraphQL */ `
       isLockedOnSubmission
       isUseAutoScore
       isUseAutoSubmit
+      isArchived
+      isFavorite
       toolAssignmentData {
         quizQuestions {
           questionText
@@ -50,6 +52,8 @@ export const listAssignments = /* GraphQL */ `
         isLockedOnSubmission
         isUseAutoScore
         isUseAutoSubmit
+        isArchived
+        isFavorite
         createdAt
         updatedAt
       }

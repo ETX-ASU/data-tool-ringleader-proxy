@@ -23,6 +23,8 @@ type Assignment @model {
   isLockedOnSubmission: Boolean
   isUseAutoScore: Boolean
   isUseAutoSubmit: Boolean
+  isArchived: Boolean
+  isFavorite: Boolean
   toolAssignmentData: ToolAssignmentData
 }
 
