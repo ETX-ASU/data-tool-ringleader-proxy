@@ -171,13 +171,14 @@ function AssignmentEditor() {
           </Row>
           }
         </Container>
-
-        <ToolAssignment
-          isLimitedEditing={isLimitedEditing}
-          isUseAutoScore={formData.isUseAutoScore}
-          toolAssignmentData={formData.toolAssignmentData}
-          updateToolAssignmentData={handleQuizChanges}/>
       </form>
+
+      <ToolAssignment
+        isLimitedEditing={isLimitedEditing}
+        isUseAutoScore={formData.isUseAutoScore}
+        toolAssignmentData={formData.toolAssignmentData}
+        updateToolAssignmentData={handleQuizChanges}
+      />
     </Fragment>
   )
 }

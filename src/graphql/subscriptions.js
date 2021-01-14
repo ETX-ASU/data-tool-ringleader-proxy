@@ -19,6 +19,7 @@ export const onCreateAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
+        objective
         dueDate
         minWordCount
         maxScore
@@ -46,6 +47,7 @@ export const onUpdateAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
+        objective
         dueDate
         minWordCount
         maxScore
@@ -73,6 +75,7 @@ export const onDeleteAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
+        objective
         dueDate
         minWordCount
         maxScore

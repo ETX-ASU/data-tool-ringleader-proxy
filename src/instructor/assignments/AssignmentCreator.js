@@ -158,14 +158,14 @@ function AssignmentCreator() {
         </Row>
         }
         </Container>
-
-        {/*The assignment data collected here is specific to the tool, while the above assignment data is used in every tool*/}
-        <ToolAssignment
-          isUseAutoScore={formData.isUseAutoScore}
-          toolAssignmentData={formData.toolAssignmentData}
-          updateToolAssignmentData={handleQuizChanges}
-        />
       </form>
+
+      {/*The assignment data collected here is specific to the tool, while the above assignment data is used in every tool*/}
+      <ToolAssignment
+        isUseAutoScore={formData.isUseAutoScore}
+        toolAssignmentData={formData.toolAssignmentData}
+        updateToolAssignmentData={handleQuizChanges}
+      />
     </Fragment>
   )
 }
