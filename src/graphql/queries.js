@@ -19,13 +19,9 @@ export const getAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        quizQuestions {
-          questionText
-          answerOptions
-          correctAnswerIndex
-          progressPointsForCompleting
-          gradePointsForCorrectAnswer
-        }
+        dueDate
+        minWordCount
+        maxScore
       }
       createdAt
       updatedAt
@@ -54,6 +50,11 @@ export const listAssignments = /* GraphQL */ `
         isUseAutoSubmit
         isArchived
         isFavorite
+        toolAssignmentData {
+          dueDate
+          minWordCount
+          maxScore
+        }
         createdAt
         updatedAt
       }

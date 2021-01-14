@@ -12,7 +12,7 @@ import {reportError} from "../../developer/DevUtils";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons'
 import ConfirmationModal from "../../app/components/ConfirmationModal";
-import QuizViewerAndEngager from "../../tool/QuizViewerAndEngager";
+import { ToolHomework } from "../../tool/ToolHomework";
 import {sendAutoGradeToLMS} from "../../lmsConnection/RingLeader";
 import {calcAutoScore, calcMaxScoreForAssignment} from "../../tool/ToolUtils";
 
@@ -133,13 +133,14 @@ function HomeworkEngager(props) {
         </Container>
 
         <Container className='pb-5'>
-          <QuizViewerAndEngager
+          <ToolHomework
             isReadOnly={false}
             isShowCorrect={false}
             toolAssignmentData={assignment.toolAssignmentData}
             toolHomeworkData={toolHomeworkData}
             updateToolHomeworkData={handleHomeworkDataChange}
-            triggerAutoSave={autoSave} />
+            triggerAutoSave={autoSave}
+          />
         </Container>
 
 			</form>

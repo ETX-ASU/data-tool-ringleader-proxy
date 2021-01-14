@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import "./homeworks.scss";
 import HeaderBar from "../../app/components/HeaderBar";
-import QuizViewerAndEngager from "../../tool/QuizViewerAndEngager";
+import { ToolHomework } from "../../tool/ToolHomework";
 
 
 function HomeworkViewer(props) {
@@ -17,11 +17,12 @@ function HomeworkViewer(props) {
           <Col><p>{assignment.summary}</p></Col>
         </Row>
 
-        <QuizViewerAndEngager
-          isReadOnly={true}
-          isShowCorrect={true}
+        <ToolHomework
+          isReadOnly
+          isShowCorrect
           toolAssignmentData={assignment.toolAssignmentData}
-          toolHomeworkData={homework.toolHomeworkData} />
+          toolHomeworkData={homework.toolHomeworkData}
+        />
 
       </Container>
     </Fragment>

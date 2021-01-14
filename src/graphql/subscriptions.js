@@ -19,13 +19,9 @@ export const onCreateAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        quizQuestions {
-          questionText
-          answerOptions
-          correctAnswerIndex
-          progressPointsForCompleting
-          gradePointsForCorrectAnswer
-        }
+        dueDate
+        minWordCount
+        maxScore
       }
       createdAt
       updatedAt
@@ -50,13 +46,9 @@ export const onUpdateAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        quizQuestions {
-          questionText
-          answerOptions
-          correctAnswerIndex
-          progressPointsForCompleting
-          gradePointsForCorrectAnswer
-        }
+        dueDate
+        minWordCount
+        maxScore
       }
       createdAt
       updatedAt
@@ -81,13 +73,9 @@ export const onDeleteAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        quizQuestions {
-          questionText
-          answerOptions
-          correctAnswerIndex
-          progressPointsForCompleting
-          gradePointsForCorrectAnswer
-        }
+        dueDate
+        minWordCount
+        maxScore
       }
       createdAt
       updatedAt

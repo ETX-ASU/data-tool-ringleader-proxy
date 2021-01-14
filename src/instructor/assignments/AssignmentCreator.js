@@ -13,10 +13,11 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import HeaderBar from "../../app/components/HeaderBar";
 import ToggleSwitch from "../../app/components/ToggleSwitch";
 
-import QuizCreator from "../../tool/QuizCreator";
+import { ToolAssignment } from "../../tool/ToolAssignment";
 import ConfirmationModal from "../../app/components/ConfirmationModal";
 import {reportError} from "../../developer/DevUtils";
 import {/*createAssignmentInLms,*/ handleConnectToLMS} from "../../lmsConnection/RingLeader";
+import { EMPTY_TOOL_ASSIGNMENT_DATA } from '../../tool/constants';
 // import {calcMaxScoreForAssignment} from "../../tool/ToolUtils";
 
 const emptyAssignment = {
@@ -34,13 +35,7 @@ const emptyAssignment = {
 
   // This data is specific to the tool (Quiz tool data is just an array of questions & answers)
   toolAssignmentData: {
-    quizQuestions: [{
-      questionText: '',
-      answerOptions: ['', ''],
-      correctAnswerIndex: 0,
-      progressPointsForCompleting: 1,
-      gradePointsForCorrectAnswer: 10
-    }]
+    ...EMPTY_TOOL_ASSIGNMENT_DATA
   }
 };
 
@@ -165,7 +160,11 @@ function AssignmentCreator() {
         </Container>
 
         {/*The assignment data collected here is specific to the tool, while the above assignment data is used in every tool*/}
-        <QuizCreator isUseAutoScore={formData.isUseAutoScore} toolAssignmentData={formData.toolAssignmentData} updateToolAssignmentData={handleQuizChanges}/>
+        <ToolAssignment
+          isUseAutoScore={formData.isUseAutoScore}
+          toolAssignmentData={formData.toolAssignmentData}
+          updateToolAssignmentData={handleQuizChanges}
+        />
       </form>
     </Fragment>
   )

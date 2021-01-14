@@ -2,14 +2,6 @@
 ## HOWEVER, in order to work with AWS "amplify push" calls, you MUST manually copy this file
 ## into your amplify/backend/api/project-name/ directory before calling "amplify push"
 
-type QuizQuestion {
-  questionText: String!
-  answerOptions: [String]
-  correctAnswerIndex: Int
-  progressPointsForCompleting: Int
-  gradePointsForCorrectAnswer: Int
-}
-
 type Assignment @model {
   id: ID!
   courseId: ID
@@ -23,6 +15,8 @@ type Assignment @model {
   isLockedOnSubmission: Boolean
   isUseAutoScore: Boolean
   isUseAutoSubmit: Boolean
+  isArchived: Boolean
+  isFavorite: Boolean
   toolAssignmentData: ToolAssignmentData
 }
 
@@ -37,7 +31,9 @@ type Homework @model {
 }
 
 type ToolAssignmentData {
-  quizQuestions: [QuizQuestion]
+  dueDate: String
+  minWordCount: Int
+  maxScore: Int
 }
 
 type ToolHomeworkData {

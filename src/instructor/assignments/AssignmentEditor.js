@@ -8,7 +8,7 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import "./assignments.scss";
 import HeaderBar from "../../app/components/HeaderBar";
 import ToggleSwitch from "../../app/components/ToggleSwitch";
-import QuizCreator from "../../tool/QuizCreator";
+import { ToolAssignment } from "../../tool/ToolAssignment";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 import ConfirmationModal from "../../app/components/ConfirmationModal";
@@ -172,7 +172,7 @@ function AssignmentEditor() {
           }
         </Container>
 
-        <QuizCreator
+        <ToolAssignment
           isLimitedEditing={isLimitedEditing}
           isUseAutoScore={formData.isUseAutoScore}
           toolAssignmentData={formData.toolAssignmentData}

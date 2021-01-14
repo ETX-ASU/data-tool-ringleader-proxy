@@ -16,6 +16,7 @@ import LoadingIndicator from "../app/components/LoadingIndicator";
 import aws_exports from '../aws-exports';
 import moment from "moment";
 import {reportError} from "../developer/DevUtils";
+import { EMPTY_TOOL_HOMEWORK_DATA } from '../tool/constants';
 
 
 function StudentDashboard() {
@@ -46,7 +47,9 @@ function StudentDashboard() {
           beganOnDate: moment().valueOf(),
           studentOwnerId: activeUser.id,
           assignmentId: assignment.id,
-          toolHomeworkData: {quizAnswers:Array(assignment.toolAssignmentData.quizQuestions.length).fill(-1)}
+          toolHomeworkData: {
+						...EMPTY_TOOL_HOMEWORK_DATA
+					}
 			  });
         const resultHomework = await API.graphql({query: createHomework, variables: {input: freshHomework}});
         console.warn("Successful in creating homework for this student");
