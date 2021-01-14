@@ -1,0 +1,19 @@
+.chartLoader {
+  display: none;
+}
+
+.validUrl {
+  border-color: green !important;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,128,0,.25) !important;
+  }
+}
+
+.invalidUrl {
+  border-color: red !important;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(128,0,0,.25) !important;
+  }
+}

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { AssignmentConfig } from "./components/AssignmentConfig/AssignmentConfig";
 import { AssignmentObjective } from "./components/AssignmentObjective/AssignmentObjective";
+import { DataSource } from "./components/DataSource/DataSource";
 
 export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolAssignmentData }) => {
   const [config, setConfig] = useState({})
@@ -29,6 +30,7 @@ export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolA
         onUpdate={handleUpdateConfig}
       />
       <AssignmentObjective objective={config.objective} onUpdate={handleUpdateConfig} />
+      <DataSource />
     </Form>
   )
 }
