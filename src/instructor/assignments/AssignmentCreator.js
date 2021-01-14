@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import {API} from 'aws-amplify';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
@@ -74,9 +74,14 @@ function AssignmentCreator() {
     setFormData({...formData, isUseAutoScore: !formData.isUseAutoScore, isUseAutoSubmit:false});
   }
 
-  function handleQuizChanges(toolAssignmentData) {
-    setFormData({...formData, toolAssignmentData});
-  }
+  const handleToolChanges = useCallback((toolAssignmentData) => {
+    setFormData(oldFormData => {
+      return {
+        ...oldFormData,
+        toolAssignmentData
+      }
+    });
+  }, [])
 
   function handleReturnToCreateOrDupe() {
     setActiveModal(null);
@@ -164,7 +169,7 @@ function AssignmentCreator() {
       <ToolAssignment
         isUseAutoScore={formData.isUseAutoScore}
         toolAssignmentData={formData.toolAssignmentData}
-        updateToolAssignmentData={handleQuizChanges}
+        updateToolAssignmentData={handleToolChanges}
       />
     </Fragment>
   )
