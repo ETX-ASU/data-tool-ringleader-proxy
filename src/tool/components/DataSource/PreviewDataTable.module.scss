@@ -1,0 +1,19 @@
+.dataTablePreview {
+  margin-left: 1.25rem;
+
+  > button {
+    background: transparent !important;
+    color: #0b2e13 !important;
+    font-weight: bold;
+
+    &:hover {
+      background: transparent !important;
+      color: #0b2e13 !important;
+    }
+  }
+}
+
+.wrapper {
+  max-height: 80vh;
+  overflow: auto;
+}

@@ -4,7 +4,7 @@ import { MAX_SCORE, MIN_WORD_COUNT } from "../../constants";
 
 export const AssignmentConfig = ({ isUseAutoScore, config, onUpdate }) => {
   return (
-    <Container className="mt-2 ml-2 mr-2 mb-4">
+    <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Assignment configuration</h2>
       <Row className="ml-2">
         <Form.Group as={Col}>

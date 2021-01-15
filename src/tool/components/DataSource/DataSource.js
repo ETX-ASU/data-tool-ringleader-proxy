@@ -3,6 +3,7 @@ import classNames from "clsx";
 import { Chart } from "react-google-charts";
 import { Container, Col, Form, Row } from "react-bootstrap";
 import { checkIfUrlIsValid } from "./utils";
+import { PreviewDataTable } from "./PreviewDataTable";
 import styles from "./DataSource.module.scss";
 
 export const DataSource = ({ onUpdate }) => {
@@ -36,7 +37,7 @@ export const DataSource = ({ onUpdate }) => {
   }, [data, isValidUrl])
 
   return (
-    <Container className="mt-2 ml-2 mr-2 mb-4">
+    <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Data source url</h2>
       <Row className="ml-2">
         <Form.Group as={Col}>
@@ -52,6 +53,9 @@ export const DataSource = ({ onUpdate }) => {
           />
         </Form.Group>
       </Row>
+      {data && (
+        <PreviewDataTable data={JSON.parse(data)} />
+      )}
       {isValidUrl && (
         <div className={styles.chartLoader}>
           <Chart
@@ -68,14 +72,6 @@ export const DataSource = ({ onUpdate }) => {
             ]}
           />
         </div>
-      )}
-      {data && (
-        <Row className="ml-2">
-          <Chart
-            chartType="Table"
-            data={JSON.parse(data)}
-          />
-        </Row>
       )}
     </Container>
   )
