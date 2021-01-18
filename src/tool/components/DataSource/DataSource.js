@@ -6,7 +6,7 @@ import { checkIfUrlIsValid } from "./utils";
 import { PreviewDataTable } from "./PreviewDataTable";
 import styles from "./DataSource.module.scss";
 
-export const DataSource = ({ onUpdate }) => {
+export const DataSource = ({ onUpdate, tableData }) => {
   const [dataSourceUrl, setDataSourceUrl] = useState("");
   const [isValidUrl, setIsValidUrl] = useState(null);
   const [data, setData] = useState(null);
@@ -28,6 +28,12 @@ export const DataSource = ({ onUpdate }) => {
 
     checkUrl(dataSourceUrl)
   }, [dataSourceUrl])
+
+  useEffect(() => {
+    if (tableData !== null) {
+      setData(tableData)
+    }
+  }, [tableData])
 
   useEffect(() => {
     if (isValidUrl && data) {

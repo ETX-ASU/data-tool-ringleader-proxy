@@ -16,11 +16,13 @@ export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolA
     const newConfig = {
       ...config,
       [field]: value
-    }
+    };
 
     setConfig(newConfig)
     updateToolAssignmentData(newConfig)
-  }, [config, updateToolAssignmentData])
+  }, [config, updateToolAssignmentData]);
+
+  const tableData = toolAssignmentData?.tableData ||  null;
 
   return (
     <Form>
@@ -30,7 +32,7 @@ export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolA
         onUpdate={handleUpdateConfig}
       />
       <AssignmentObjective objective={config.objective} onUpdate={handleUpdateConfig} />
-      <DataSource onUpdate={handleUpdateConfig} />
+      <DataSource onUpdate={handleUpdateConfig} tableData={tableData} />
     </Form>
   )
 }
