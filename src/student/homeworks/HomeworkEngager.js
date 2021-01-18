@@ -125,25 +125,16 @@ function HomeworkEngager(props) {
         <Button onClick={() => setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})}>Submit</Button>
       </HeaderBar>
 
-			<form>
-        <Container className='mt-2 ml-1 mr-2'>
-          <Row className={'mt-4'}>
-            <Col><p>{assignment.summary}</p></Col>
-          </Row>
-        </Container>
-
-        <Container className='pb-5'>
-          <ToolHomework
-            isReadOnly={false}
-            isShowCorrect={false}
-            toolAssignmentData={assignment.toolAssignmentData}
-            toolHomeworkData={toolHomeworkData}
-            updateToolHomeworkData={handleHomeworkDataChange}
-            triggerAutoSave={autoSave}
-          />
-        </Container>
-
-			</form>
+      <Container className='pb-5'>
+        <ToolHomework
+          isReadOnly={false}
+          isShowCorrect={false}
+          toolAssignmentData={assignment.toolAssignmentData}
+          toolHomeworkData={toolHomeworkData}
+          updateToolHomeworkData={handleHomeworkDataChange}
+          triggerAutoSave={autoSave}
+        />
+      </Container>
 
       <Row>
         <Col className='text-right mr-4'>

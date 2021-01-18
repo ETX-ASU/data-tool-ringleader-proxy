@@ -1,9 +1,12 @@
 import React from "react";
+import { HomeworkIntro } from "./components/HomeworkIntro/HomeworkIntro";
 
-export const ToolHomework = () => {
+export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData, updateToolHomeworkData }) => {
+  const tableData = JSON.parse(toolAssignmentData.tableData);
+
   return (
     <div>
-      ToolHomework
+      <HomeworkIntro objective={toolAssignmentData.objective} data={tableData} />
     </div>
   )
 }
