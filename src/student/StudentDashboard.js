@@ -77,7 +77,7 @@ function StudentDashboard() {
 
 	return (
     <Container className='student-dashboard dashboard bg-white rounded h-100'>
-      <Row className={'m-0 pb-5'}>
+      <Row className={'m-0'}>
         <Col className='rounded p-0'>
           {isLoading && <LoadingIndicator loadingMsg='LOADING STUDENT ASSIGNMENTS'/>}
 

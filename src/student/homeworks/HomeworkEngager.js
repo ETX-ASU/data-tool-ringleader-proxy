@@ -2,7 +2,7 @@ import React, {Fragment, useState} from 'react';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {ACTIVITY_PROGRESS, HOMEWORK_PROGRESS, MODAL_TYPES, UI_SCREEN_MODES} from "../../app/constants";
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Container} from 'react-bootstrap';
 import {updateHomework as updateHomeworkMutation} from "../../graphql/mutations";
 import {API} from "aws-amplify";
 import {setActiveUiScreenMode} from "../../app/store/appReducer";
@@ -135,12 +135,6 @@ function HomeworkEngager(props) {
           triggerAutoSave={autoSave}
         />
       </Container>
-
-      <Row>
-        <Col className='text-right mr-4'>
-          <Button onClick={() => setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})}>Submit</Button>
-        </Col>
-      </Row>
 		</Fragment>
 	)
 }

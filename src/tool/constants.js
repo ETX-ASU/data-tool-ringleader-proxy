@@ -12,3 +12,8 @@ export const EMPTY_TOOL_ASSIGNMENT_DATA = {
 export const EMPTY_TOOL_HOMEWORK_DATA = {}
 
 export const GOOGLE_SPREADSHEET_REGEX = /https:\/\/docs\.google\.com\/spreadsheets/
+
+export const HOMEWORK_SCREEN = {
+  intro: "intro",
+  editor: "editor"
+}
