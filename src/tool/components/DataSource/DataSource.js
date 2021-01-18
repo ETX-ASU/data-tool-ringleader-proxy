@@ -63,6 +63,13 @@ export const DataSource = ({ onUpdate }) => {
             spreadSheetUrl={dataSourceUrl}
             chartEvents={[
               {
+                eventName: "error",
+                callback: () => {
+                  setData(null);
+                  setIsValidUrl(false);
+                }
+              },
+              {
                 eventName: "ready",
                 callback: ({ chartWrapper }) => {
                   const chartData = chartWrapper.getDataTable();
@@ -71,6 +78,11 @@ export const DataSource = ({ onUpdate }) => {
               }
             ]}
           />
+        </div>
+      )}
+      {isValidUrl === false && (
+        <div className={classNames(styles.errorMessage, "alert alert-danger")}>
+          Could not find valid data table at given url.
         </div>
       )}
     </Container>
