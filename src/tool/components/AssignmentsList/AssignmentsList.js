@@ -40,7 +40,7 @@ export const AssignmentsList = ({ list }) => {
   return (
     <div className={styles.list}>
       <AssignmentsSection
-        title="Planners"
+        title="Assignments"
         items={items}
         onItemChange={handleItemChange}
         isOpen

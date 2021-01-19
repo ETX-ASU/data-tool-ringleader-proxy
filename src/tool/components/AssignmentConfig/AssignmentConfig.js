@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Col, Form, Row } from "react-bootstrap";
 import { MAX_SCORE, MIN_WORD_COUNT } from "../../constants";
 
-export const AssignmentConfig = ({ isUseAutoScore, config, onUpdate }) => {
+export const AssignmentConfig = ({ isUseAutoScore, isReadOnly, config, onUpdate }) => {
   return (
     <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Assignment configuration</h2>
@@ -10,7 +10,7 @@ export const AssignmentConfig = ({ isUseAutoScore, config, onUpdate }) => {
         <Form.Group as={Col}>
           <Form.Label>Required minimum word count in the answer</Form.Label>
           <Form.Control
-            disabled={!isUseAutoScore}
+            disabled={!isUseAutoScore || isReadOnly}
             type="number"
             value={config.minWordCount || ""}
             onChange={(event) =>
@@ -24,7 +24,7 @@ export const AssignmentConfig = ({ isUseAutoScore, config, onUpdate }) => {
         <Form.Group as={Col}>
           <Form.Label>Maximum score for the assignment</Form.Label>
           <Form.Control
-            disabled={!isUseAutoScore}
+            disabled={!isUseAutoScore || isReadOnly}
             type="number"
             value={config.maxScore || ""}
             onChange={(event) =>
@@ -38,6 +38,7 @@ export const AssignmentConfig = ({ isUseAutoScore, config, onUpdate }) => {
         <Form.Group as={Col}>
           <Form.Label>Due date</Form.Label>
           <Form.Control
+            disabled={isReadOnly}
             type="date"
             value={config.dueDate || ""}
             onChange={(event) =>

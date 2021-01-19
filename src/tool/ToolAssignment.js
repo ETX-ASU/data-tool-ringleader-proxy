@@ -4,7 +4,7 @@ import { AssignmentConfig } from "./components/AssignmentConfig/AssignmentConfig
 import { AssignmentObjective } from "./components/AssignmentObjective/AssignmentObjective";
 import { DataSource } from "./components/DataSource/DataSource";
 
-export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolAssignmentData }) => {
+export const ToolAssignment = ({ isLimitedEditing, isUseAutoScore, toolAssignmentData, updateToolAssignmentData }) => {
   const [config, setConfig] = useState({})
 
   useEffect(() => {
@@ -30,9 +30,18 @@ export const ToolAssignment = ({ isUseAutoScore, toolAssignmentData, updateToolA
         isUseAutoScore={isUseAutoScore}
         config={config}
         onUpdate={handleUpdateConfig}
+        isReadOnly={isLimitedEditing}
       />
-      <AssignmentObjective objective={config.objective} onUpdate={handleUpdateConfig} />
-      <DataSource onUpdate={handleUpdateConfig} tableData={tableData} />
+      <AssignmentObjective
+        objective={config.objective}
+        onUpdate={handleUpdateConfig}
+        isReadOnly={isLimitedEditing}
+      />
+      <DataSource
+        isReadOnly={isLimitedEditing}
+        onUpdate={handleUpdateConfig}
+        tableData={tableData}
+      />
     </Form>
   )
 }

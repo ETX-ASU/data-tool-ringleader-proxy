@@ -6,7 +6,7 @@ import { checkIfUrlIsValid } from "./utils";
 import { PreviewDataTable } from "./PreviewDataTable";
 import styles from "./DataSource.module.scss";
 
-export const DataSource = ({ onUpdate, tableData }) => {
+export const DataSource = ({ isReadOnly, onUpdate, tableData }) => {
   const [dataSourceUrl, setDataSourceUrl] = useState("");
   const [isValidUrl, setIsValidUrl] = useState(null);
   const [data, setData] = useState(null);
@@ -53,6 +53,7 @@ export const DataSource = ({ onUpdate, tableData }) => {
               isValidUrl === true && styles.validUrl,
               isValidUrl === false && styles.invalidUrl
             )}
+            disabled={isReadOnly}
             type="text"
             value={dataSourceUrl}
             onChange={(event) => setDataSourceUrl(event.target.value)}

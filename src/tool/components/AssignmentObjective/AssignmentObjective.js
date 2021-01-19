@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Col, Form, Row } from "react-bootstrap";
 import styles from "./AssignmentObjective.module.scss";
 
-export const AssignmentObjective = ({ objective, onUpdate }) => {
+export const AssignmentObjective = ({ isReadOnly, objective, onUpdate }) => {
   return (
     <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Assignment objective</h2>
@@ -12,6 +12,7 @@ export const AssignmentObjective = ({ objective, onUpdate }) => {
           <Form.Control
             as="textarea"
             className={styles.textarea}
+            disabled={isReadOnly}
             rows={3}
             value={objective || ""}
             onChange={(event) =>
