@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Col, Row, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { HOMEWORK_SCREEN } from "../../constants";
 import styles from "./HomeworkFooter.module.scss";
 
@@ -18,24 +18,22 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
 
   return (
     <div className={styles.footer}>
-      <Row>
-        <Col>
-          {screen !== HOMEWORK_SCREEN.intro && (
-            <Button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handlePrevPageClick}
-            >Previous page</Button>
-          )}
-        </Col>
-        <Col className="text-right">
+      <div>
+        {screen !== HOMEWORK_SCREEN.intro && (
           <Button
             type="button"
             className="btn btn-secondary"
-            onClick={handleNextPageClick}
-          >Next</Button>
-        </Col>
-      </Row>
+            onClick={handlePrevPageClick}
+          >Previous page</Button>
+        )}
+      </div>
+      <div>
+        <Button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleNextPageClick}
+        >Next</Button>
+      </div>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HomeworkIntro } from "./components/HomeworkIntro/HomeworkIntro";
 import { HomeworkEditor } from "./components/HomeworkEditor/HomeworkEditor";
-import { HomeworkFooter } from "./components/HomeworkFooter/HomeworkFooter";
+import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkContainter";
 import { HOMEWORK_SCREEN } from "./constants";
 
 export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData, updateToolHomeworkData }) => {
@@ -9,7 +9,7 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
   return (
-    <>
+    <HomeworkContainter setScreen={setScreen} screen={screen}>
       {screen === HOMEWORK_SCREEN.intro && (
         <HomeworkIntro
           objective={toolAssignmentData.objective}
@@ -23,7 +23,6 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
           setScreen={setScreen}
         />
       )}
-      <HomeworkFooter screen={screen} setScreen={setScreen} />
-    </>
+    </HomeworkContainter>
   )
 }

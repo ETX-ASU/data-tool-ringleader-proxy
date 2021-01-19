@@ -1,6 +1,13 @@
 .homeworkEditor {
-  height: 590px;
-  // visibility: hidden;
+  height: 100%;
+  
+  .chart {
+    visibility: hidden;
+
+    &.visible {
+      visibility: visible;
+    }
+  }
 }
 
 :global(.google-visualization-charteditor-dialog) {
