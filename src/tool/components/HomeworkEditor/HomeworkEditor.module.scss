@@ -1,0 +1,23 @@
+.homeworkEditor {
+  height: 590px;
+  // visibility: hidden;
+}
+
+:global(.google-visualization-charteditor-dialog) {
+  position: absolute;
+  pointer-events: initial;
+
+  * {
+    box-sizing: content-box;
+  }
+
+  @media (min-width: 576px) {
+    max-width: unset;
+    margin-bottom: 0;
+  }
+}
+
+:global(.modal-dialog-title-close) {
+  visibility: hidden;
+  pointer-events: none;
+}

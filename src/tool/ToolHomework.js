@@ -5,7 +5,7 @@ import { HomeworkFooter } from "./components/HomeworkFooter/HomeworkFooter";
 import { HOMEWORK_SCREEN } from "./constants";
 
 export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData, updateToolHomeworkData }) => {
-  const [screen, setScreen] = useState(HOMEWORK_SCREEN.intro);
+  const [screen, setScreen] = useState(HOMEWORK_SCREEN.editor);
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
   return (
