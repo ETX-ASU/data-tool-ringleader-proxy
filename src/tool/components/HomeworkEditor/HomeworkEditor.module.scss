@@ -1,12 +1,16 @@
 .homeworkEditor {
   height: 100%;
   
-  .chart {
+  .chartInvisible {
     visibility: hidden;
+  }
 
-    &.visible {
-      visibility: visible;
-    }
+  .chartVisible {
+    visibility: visible;
+  }
+
+  button + button {
+    margin-left: 10px;
   }
 }
 

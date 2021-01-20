@@ -152,7 +152,10 @@ button {
     color: white;
   }
 
-  border: none !important;
+  &.btn-primary {
+    border: none !important;
+  }
+
   background-color: var(--x-dark-gray);
   &:visited, &::selection {
     border: none;

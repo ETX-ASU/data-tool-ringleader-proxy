@@ -3,8 +3,10 @@
 
   > button {
     background: transparent !important;
+    border: 0 !important;
     color: #0b2e13 !important;
     font-weight: bold;
+    outline: none !important;
 
     &:hover {
       background: transparent !important;
