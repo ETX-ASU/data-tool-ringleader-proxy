@@ -32,7 +32,6 @@ type Homework @model {
 
 type ToolAssignmentData {
   objective: String
-  dueDate: String
   minWordCount: Int
   maxScore: Int
   tableData: String

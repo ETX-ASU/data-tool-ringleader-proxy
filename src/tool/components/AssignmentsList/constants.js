@@ -9,10 +9,6 @@ export const assignmentColumns = [
     colspan: 2,
   },
   {
-    id: "dueDate",
-    title: "Due date",
-  },
-  {
     id: "createdAt",
     title: "Created at",
   },

@@ -60,9 +60,6 @@ export const AssignmentItem = ({ onChange, item }) => {
         </div>
       </td>
       <td className={styles.noWrap}>
-        {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : "-"}
-      </td>
-      <td className={styles.noWrap}>
         {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : "-"}
       </td>
       <td className={styles.noWrap}>

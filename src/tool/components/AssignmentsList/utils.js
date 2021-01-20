@@ -8,9 +8,6 @@ export const mapAssignmentsToList = (list) =>
       id: item.id,
       course: item.courseId,
       planner: item.title,
-      dueDate: item.toolAssignmentData?.plannerConfig?.dueDate
-        ? +new Date(item.toolAssignmentData?.plannerConfig?.dueDate)
-        : "",
       createdAt: +new Date(item.createdAt),
       updatedAt: item.updatedAt ? +new Date(item.updatedAt) : "",
       isFavorite: item.isFavorite,

@@ -35,17 +35,6 @@ export const AssignmentConfig = ({ isUseAutoScore, isReadOnly, config, onUpdate 
             }
           />
         </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Label>Due date</Form.Label>
-          <Form.Control
-            disabled={isReadOnly}
-            type="date"
-            value={config.dueDate || ""}
-            onChange={(event) =>
-              onUpdate("dueDate", event.target.value)
-            }
-          />
-        </Form.Group>
       </Row>
     </Container>
   )
