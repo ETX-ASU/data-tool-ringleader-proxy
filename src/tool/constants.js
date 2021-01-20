@@ -14,5 +14,6 @@ export const GOOGLE_SPREADSHEET_REGEX = /https:\/\/docs\.google\.com\/spreadshee
 
 export const HOMEWORK_SCREEN = {
   intro: "intro",
-  editor: "editor"
+  editor: "editor",
+  answer: "answer"
 }

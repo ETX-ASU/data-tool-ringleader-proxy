@@ -53,7 +53,8 @@ export const HomeworkEditor = ({ data }) => {
   return (
     <div className={styles.homeworkEditor}>
       <div className="chart-info">
-        Use the controls below to select the graph and manipulate it in order to accurately represent. You may click on the table button at any point to view the data.
+      Use the controls below to select the graph and manipulate it in order to accurately represent the task.
+        You may click on the table button at any point to view the data.
       </div>
       <div className={isChartVisible ? styles.chartVisible : styles.chartInvisible}>
         <Button variant="outline-success" size="sm">View data table</Button>

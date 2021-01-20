@@ -30,5 +30,5 @@ export const HomeworkIntro = ({ data, objective }) => {
         </Col>
       </Row>
     </div>
-  )
+  );
 }
