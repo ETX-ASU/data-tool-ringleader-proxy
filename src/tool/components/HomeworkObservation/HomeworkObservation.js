@@ -1,24 +1,21 @@
 import React from "react";
-// import { Chart } from "react-google-charts";
+import { Chart } from "react-google-charts";
 import { Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { TextEditor } from "./TextEditor";
 import styles from "./HomeworkObservation.module.scss";
 
-export const HomeworkObservation = ({ answer, setAnswer, minWordCount, chartData, chartOptions }) => {
+export const HomeworkObservation = ({ answer, chartType, setAnswer, minWordCount, chartData, chartOptions }) => {
   return (
     <div className={styles.homeworkAnswer}>
       <Row>
         <Col>
           <h3>Take a look at your graph, displayed below.</h3>
           <div className={styles.chartPreview}>
-            Chart will be here
-            {/* <Chart
-              chartType="Table"
-              data={data}
-              options={{
-                showRowNumber: true,
-              }}
-            /> */}
+            <Chart
+              chartType={chartType}
+              data={chartData}
+              options={chartOptions}
+            />
           </div>
         </Col>
         <Col>

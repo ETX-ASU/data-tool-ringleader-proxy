@@ -39,6 +39,9 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
       {screen === HOMEWORK_SCREEN.answer && (
         <HomeworkObservation
           answer={answer}
+          chartData={tableData}
+          chartType={chartType}
+          chartOptions={chartOptions}
           setAnswer={setAnswer}
           minWordCount={toolAssignmentData.minWordCount}
         />
