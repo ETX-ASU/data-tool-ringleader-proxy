@@ -2,9 +2,9 @@ import React from "react";
 // import { Chart } from "react-google-charts";
 import { Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { TextEditor } from "./TextEditor";
-import styles from "./HomeworkAnswer.module.scss";
+import styles from "./HomeworkObservation.module.scss";
 
-export const HomeworkAnswer = ({ answer, setAnswer, minWordCount, chartData, chartOptions }) => {
+export const HomeworkObservation = ({ answer, setAnswer, minWordCount, chartData, chartOptions }) => {
   return (
     <div className={styles.homeworkAnswer}>
       <Row>

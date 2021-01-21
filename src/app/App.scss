@@ -154,6 +154,10 @@ button {
 
   &.btn-primary {
     border: none !important;
+
+    &:hover {
+      border: none;
+    }
   }
 
   background-color: var(--x-dark-gray);
@@ -167,7 +171,6 @@ button {
   }
   &:hover, &:focus {
     box-shadow: none;
-    border: none;
     background-color: var(--x-black) !important;
   }
 

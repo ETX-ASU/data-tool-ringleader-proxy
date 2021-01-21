@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import styles from "./HomeworkAnswer.module.scss";
+import styles from "./HomeworkObservation.module.scss";
 
 export const TextEditor = ({ value, setValue, minWordCount }) => {
   const [wordCount, setWordCount] = useState(0)

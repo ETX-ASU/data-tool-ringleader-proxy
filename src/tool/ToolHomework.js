@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HomeworkIntro } from "./components/HomeworkIntro/HomeworkIntro";
 import { HomeworkEditor } from "./components/HomeworkEditor/HomeworkEditor";
-import { HomeworkAnswer } from "./components/HomeworkAnswer/HomeworkAnswer";
+import { HomeworkObservation } from "./components/HomeworkObservation/HomeworkObservation";
 import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkContainter";
 import { HOMEWORK_SCREEN } from "./constants";
 
@@ -37,7 +37,7 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
         />
       )}
       {screen === HOMEWORK_SCREEN.answer && (
-        <HomeworkAnswer
+        <HomeworkObservation
           answer={answer}
           setAnswer={setAnswer}
           minWordCount={toolAssignmentData.minWordCount}
