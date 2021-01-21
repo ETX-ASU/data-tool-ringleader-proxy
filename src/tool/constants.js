@@ -17,3 +17,5 @@ export const HOMEWORK_SCREEN = {
   editor: "editor",
   answer: "answer"
 }
+
+export const SCREEN_ORDER = [HOMEWORK_SCREEN.intro, HOMEWORK_SCREEN.editor, HOMEWORK_SCREEN.answer];

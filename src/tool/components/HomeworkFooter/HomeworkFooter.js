@@ -1,18 +1,22 @@
 import React, { useCallback } from "react";
 import { Button } from "react-bootstrap";
-import { HOMEWORK_SCREEN } from "../../constants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { HOMEWORK_SCREEN, SCREEN_ORDER } from "../../constants";
 import styles from "./HomeworkFooter.module.scss";
 
 export const HomeworkFooter = ({ screen, setScreen }) => {
   const handlePrevPageClick = useCallback(() => {
-    if (screen === HOMEWORK_SCREEN.editor) {
-      setScreen(HOMEWORK_SCREEN.intro);
+    const screenIndex = SCREEN_ORDER.indexOf(screen)
+    if (screenIndex > 0) {
+      setScreen(SCREEN_ORDER[screenIndex - 1]);
     }
   }, [screen, setScreen]);
 
   const handleNextPageClick = useCallback(() => {
-    if (screen === HOMEWORK_SCREEN.intro) {
-      setScreen(HOMEWORK_SCREEN.editor);
+    const screenIndex = SCREEN_ORDER.indexOf(screen)
+    if (screenIndex < SCREEN_ORDER.length - 1) {
+      setScreen(SCREEN_ORDER[screenIndex + 1]);
     }
   }, [screen, setScreen]);
 
@@ -24,7 +28,10 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
             type="button"
             className="btn btn-secondary"
             onClick={handlePrevPageClick}
-          >Previous page</Button>
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+            <span>Previous page</span>
+          </Button>
         )}
       </div>
       <div>
@@ -32,7 +39,10 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
           type="button"
           className="btn btn-secondary"
           onClick={handleNextPageClick}
-        >Next</Button>
+        >
+          <span>Next</span>
+          <FontAwesomeIcon icon={faChevronRight} />
+        </Button>
       </div>
     </div>
   )
