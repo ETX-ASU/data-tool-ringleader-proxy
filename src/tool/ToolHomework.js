@@ -6,7 +6,9 @@ import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkCont
 import { HOMEWORK_SCREEN } from "./constants";
 
 export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData, updateToolHomeworkData }) => {
-  const [screen, setScreen] = useState(HOMEWORK_SCREEN.answer);
+  const [screen, setScreen] = useState(HOMEWORK_SCREEN.editor);
+  const [chartType, setChartType] = useState("ScatterChart");
+  const [chartOptions, setChartOptions] = useState({});
   const [answer, setAnswer] = useState("");
 
   const tableData = JSON.parse(toolAssignmentData.tableData);
@@ -28,6 +30,10 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
       {screen === HOMEWORK_SCREEN.editor && (
         <HomeworkEditor
           data={tableData}
+          chartType={chartType}
+          chartOptions={chartOptions}
+          setChartType={setChartType}
+          setChartOptions={setChartOptions}
         />
       )}
       {screen === HOMEWORK_SCREEN.answer && (

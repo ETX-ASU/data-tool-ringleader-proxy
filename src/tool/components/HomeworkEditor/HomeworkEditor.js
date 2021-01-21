@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { generateChartEditorStyles } from "./utils";
 import styles from "./HomeworkEditor.module.scss";
 
-export const HomeworkEditor = ({ data }) => {
+export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions, setChartType }) => {
   const [google, setGoogle] = useState(null);
   const [chartEditor, setChartEditor] = useState(null);
   const [chartWrapper, setChartWrapper] = useState(null);
@@ -20,9 +20,9 @@ export const HomeworkEditor = ({ data }) => {
     const newChartOptions = newChartWrapper.getOptions();
     const newChartType = newChartWrapper.getChartType();
 
-    console.log('Chart type changed to ', newChartType);
-    console.log('Chart options changed to ', newChartOptions);
-  }, [chartEditor]);
+    setChartType(newChartType);
+    setChartOptions(newChartOptions);
+  }, [chartEditor, setChartOptions, setChartType]);
 
   const handleCancelClick = useCallback(() => {
     setChartVisible(true);
@@ -39,11 +39,24 @@ export const HomeworkEditor = ({ data }) => {
     const isEditorAvailable = chartWrapper !== null && google !== null && chartEditor !== null;
 
     if (isEditorAvailable) {
-      chartEditor.openDialog(chartWrapper)
       google.visualization.events.addListener(chartEditor, "ok", handleOkClick);
       google.visualization.events.addListener(chartEditor, "cancel", handleCancelClick);
     }
   }, [chartEditor, chartWrapper, google, handleCancelClick, handleOkClick]);
+
+  useEffect(() => {
+    const isEditorAvailable = chartWrapper !== null && google !== null && chartEditor !== null;
+
+    if (isEditorAvailable && Object.keys(chartOptions).length === 0) {
+      chartEditor.openDialog(chartWrapper)
+    }
+  }, [chartEditor, chartOptions, chartWrapper, google]);
+
+  useEffect(() => {
+    if (Object.keys(chartOptions).length > 0) {
+      setChartVisible(true);
+    }
+  }, [chartOptions]);
 
   useEffect(() => {
     const { height } = generateChartEditorStyles();
@@ -60,7 +73,7 @@ export const HomeworkEditor = ({ data }) => {
         <Button variant="outline-success" size="sm">View data table</Button>
         <Button variant="outline-success" size="sm" onClick={openEditor}>Edit chart</Button>
         <Chart
-          chartType="ScatterChart"
+          chartType={chartType}
           data={data}
           height={`${chartHeight}px`}
           getChartEditor={({ chartEditor, chartWrapper, google }) => {
@@ -68,6 +81,7 @@ export const HomeworkEditor = ({ data }) => {
             setChartEditor(chartEditor);
             setChartWrapper(chartWrapper);
           }}
+          options={chartOptions}
           chartPackages={["corechart", "controls", "charteditor"]}
         />
       </div>
