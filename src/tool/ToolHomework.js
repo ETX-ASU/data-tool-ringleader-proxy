@@ -9,7 +9,7 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
   const [screen, setScreen] = useState(HOMEWORK_SCREEN.intro);
   const [chartType, setChartType] = useState("ScatterChart");
   const [chartOptions, setChartOptions] = useState({});
-  const [answer, setAnswer] = useState("");
+  const [observations, setObservations] = useState("");
 
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
@@ -38,11 +38,11 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
       )}
       {screen === HOMEWORK_SCREEN.answer && (
         <HomeworkObservation
-          answer={answer}
+          observations={observations}
           chartData={tableData}
           chartType={chartType}
           chartOptions={chartOptions}
-          setAnswer={setAnswer}
+          setObservations={setObservations}
           minWordCount={toolAssignmentData.minWordCount}
         />
       )}

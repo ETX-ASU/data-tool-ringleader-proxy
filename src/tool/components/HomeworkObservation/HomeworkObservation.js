@@ -4,7 +4,7 @@ import { Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { TextEditor } from "./TextEditor";
 import styles from "./HomeworkObservation.module.scss";
 
-export const HomeworkObservation = ({ answer, chartType, setAnswer, minWordCount, chartData, chartOptions }) => {
+export const HomeworkObservation = ({ observations, chartType, setObservations, minWordCount, chartData, chartOptions }) => {
   return (
     <div className={styles.homeworkAnswer}>
       <Row>
@@ -48,8 +48,8 @@ export const HomeworkObservation = ({ answer, chartType, setAnswer, minWordCount
           </div>
           <div className={styles.answer}>
             <TextEditor
-              value={answer}
-              setValue={setAnswer}
+              value={observations}
+              setValue={setObservations}
               minWordCount={minWordCount}
             />
           </div>
