@@ -35,14 +35,16 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
         )}
       </div>
       <div>
-        <Button
-          type="button"
-          className="btn btn-secondary"
-          onClick={handleNextPageClick}
-        >
-          <span>Next</span>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </Button>
+        {screen !== HOMEWORK_SCREEN.answer && (
+          <Button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleNextPageClick}
+          >
+            <span>Next</span>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Button>
+        )}
       </div>
     </div>
   )
