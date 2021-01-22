@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { Button } from "react-bootstrap";
+import { HomeworkDataTable } from "../HomeworkDataTable/HomeworkDataTable";
 import { generateChartEditorStyles } from "./utils";
 import styles from "./HomeworkEditor.module.scss";
 
@@ -66,12 +67,14 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
   return (
     <div className={styles.homeworkEditor}>
       <div className="chart-info">
-      Use the controls below to select the graph and manipulate it in order to accurately represent the task.
+        Use the controls below to select the graph and manipulate it in order to accurately represent the task.
         You may click on the table button at any point to view the data.
       </div>
       <div className={isChartVisible ? styles.chartVisible : styles.chartInvisible}>
-        <Button variant="outline-success" size="sm">View data table</Button>
-        <Button variant="outline-success" size="sm" onClick={openEditor}>Edit chart</Button>
+        <div className={styles.buttons}>
+          <HomeworkDataTable data={data} />
+          <Button variant="outline-success" size="sm" onClick={openEditor}>Edit chart</Button>
+        </div>
         <Chart
           chartType={chartType}
           data={data}

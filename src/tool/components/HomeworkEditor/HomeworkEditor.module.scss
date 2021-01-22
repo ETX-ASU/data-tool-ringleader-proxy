@@ -28,6 +28,11 @@
   }
 }
 
+.buttons {
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
 :global(.modal-dialog-title-close) {
   visibility: hidden;
   pointer-events: none;
