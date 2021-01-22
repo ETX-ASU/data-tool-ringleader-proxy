@@ -21,7 +21,7 @@ export const ToolHomework = ({
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
   useEffect(() => {
-    updateToolHomeworkData({
+    typeof updateToolHomeworkData === "function" && updateToolHomeworkData({
       chartOptions: JSON.stringify(chartOptions),
       observations
     });
@@ -33,7 +33,7 @@ export const ToolHomework = ({
     const minWordCount = toolAssignmentData.minWordCount;
     const isValidHomework = wordCount >= minWordCount && Object.keys(chartOptions).length > 0;
 
-    setSubmitEnabled(isValidHomework);
+    typeof setSubmitEnabled === "function" && setSubmitEnabled(isValidHomework);
   }, [chartOptions, observations, setSubmitEnabled, toolAssignmentData.minWordCount]);
 
   if (isReadOnly) {
