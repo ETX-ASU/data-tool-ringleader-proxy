@@ -15,7 +15,7 @@ export const GOOGLE_SPREADSHEET_REGEX = /https:\/\/docs\.google\.com\/spreadshee
 export const HOMEWORK_SCREEN = {
   intro: "intro",
   editor: "editor",
-  answer: "answer"
+  observation: "observation"
 }
 
-export const SCREEN_ORDER = [HOMEWORK_SCREEN.intro, HOMEWORK_SCREEN.editor, HOMEWORK_SCREEN.answer];
+export const SCREEN_ORDER = [HOMEWORK_SCREEN.intro, HOMEWORK_SCREEN.editor, HOMEWORK_SCREEN.observation];

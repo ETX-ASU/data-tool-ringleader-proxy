@@ -6,7 +6,7 @@ import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkCont
 import { HOMEWORK_SCREEN } from "./constants";
 
 export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData, updateToolHomeworkData }) => {
-  const [screen, setScreen] = useState(HOMEWORK_SCREEN.intro);
+  const [screen, setScreen] = useState(HOMEWORK_SCREEN.observation);
   const [chartType, setChartType] = useState("ScatterChart");
   const [chartOptions, setChartOptions] = useState({});
   const [observations, setObservations] = useState("");
@@ -36,7 +36,7 @@ export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData,
           setChartOptions={setChartOptions}
         />
       )}
-      {screen === HOMEWORK_SCREEN.answer && (
+      {screen === HOMEWORK_SCREEN.observation && (
         <HomeworkObservation
           observations={observations}
           chartData={tableData}

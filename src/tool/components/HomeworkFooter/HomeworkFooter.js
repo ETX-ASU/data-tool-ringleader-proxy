@@ -35,7 +35,7 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
         )}
       </div>
       <div>
-        {screen !== HOMEWORK_SCREEN.answer && (
+        {screen !== HOMEWORK_SCREEN.observation && (
           <Button
             type="button"
             className="btn btn-secondary"
