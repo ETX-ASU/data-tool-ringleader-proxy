@@ -2,25 +2,30 @@ import React from "react";
 import { Chart } from "react-google-charts";
 import { Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { TextEditor } from "./TextEditor";
+import { SampleObservation } from "./SampleObservation";
 import styles from "./HomeworkObservation.module.scss";
 
 export const HomeworkObservation = ({ observations, chartType, setObservations, minWordCount, chartData, chartOptions }) => {
   return (
     <div className={styles.homeworkAnswer}>
       <Row>
-        <Col>
+        <Col className="col-7">
           <h3>Take a look at your graph, displayed below.</h3>
           <div className={styles.chartPreview}>
             <Chart
               chartType={chartType}
               data={chartData}
+              height="400px"
               options={chartOptions}
             />
           </div>
         </Col>
-        <Col>
+        <Col className="col-5">
           <div className={styles.info}>
-            <h3>Interpret Data Source</h3>
+            <h3>
+              <span>Interpret Data Source</span>
+              <SampleObservation />
+            </h3>
             Make a few observations about the information displayed in the data source that you have selected. 
             Make note of information like: the different
             <OverlayTrigger placement="auto"
