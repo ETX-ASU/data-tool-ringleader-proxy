@@ -38,5 +38,6 @@ type ToolAssignmentData {
 }
 
 type ToolHomeworkData {
-  quizAnswers: [Int]
+  chartOptions: String
+  observations: String
 }

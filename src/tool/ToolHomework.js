@@ -21,6 +21,14 @@ export const ToolHomework = ({
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
   useEffect(() => {
+    updateToolHomeworkData({
+      chartOptions: JSON.stringify(chartOptions),
+      observations
+    });
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [chartOptions, observations]);
+
+  useEffect(() => {
     const wordCount = calculateWordCount(observations);
     const minWordCount = toolAssignmentData.minWordCount;
     const isValidHomework = wordCount >= minWordCount && Object.keys(chartOptions).length > 0;

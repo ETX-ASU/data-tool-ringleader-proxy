@@ -8,7 +8,10 @@ export const EMPTY_TOOL_ASSIGNMENT_DATA = {
   tableData: ""
 }
 
-export const EMPTY_TOOL_HOMEWORK_DATA = {}
+export const EMPTY_TOOL_HOMEWORK_DATA = {
+  chartOptions: "{}",
+  observations: ""
+}
 
 export const GOOGLE_SPREADSHEET_REGEX = /https:\/\/docs\.google\.com\/spreadsheets/
 

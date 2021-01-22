@@ -95,7 +95,8 @@ export const onCreateHomework = /* GraphQL */ `
       submittedOnDate
       isLocked
       toolHomeworkData {
-        quizAnswers
+        chartOptions
+        observations
       }
       createdAt
       updatedAt
@@ -112,7 +113,8 @@ export const onUpdateHomework = /* GraphQL */ `
       submittedOnDate
       isLocked
       toolHomeworkData {
-        quizAnswers
+        chartOptions
+        observations
       }
       createdAt
       updatedAt
@@ -129,7 +131,8 @@ export const onDeleteHomework = /* GraphQL */ `
       submittedOnDate
       isLocked
       toolHomeworkData {
-        quizAnswers
+        chartOptions
+        observations
       }
       createdAt
       updatedAt
