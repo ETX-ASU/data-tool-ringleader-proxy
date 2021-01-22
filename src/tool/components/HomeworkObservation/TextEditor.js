@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { calculateWordCount } from "../../ToolUtils";
 import styles from "./HomeworkObservation.module.scss";
 
 export const TextEditor = ({ value, setValue, minWordCount }) => {
@@ -6,7 +7,7 @@ export const TextEditor = ({ value, setValue, minWordCount }) => {
 
   const handleChange = useCallback((event) => {
     const text = event.target.value;
-    const wordCount = text.replace(/[^A-Za-z\s]/g, '').split(" ").filter(token => token).length;
+    const wordCount = calculateWordCount(text);
 
     setValue(text);
     setWordCount(wordCount);

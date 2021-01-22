@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HomeworkIntro } from "./components/HomeworkIntro/HomeworkIntro";
 import { HomeworkEditor } from "./components/HomeworkEditor/HomeworkEditor";
 import { HomeworkObservation } from "./components/HomeworkObservation/HomeworkObservation";
 import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkContainter";
+import { calculateWordCount } from "./ToolUtils";
 import { HOMEWORK_SCREEN } from "./constants";
 
-export const ToolHomework = ({ isReadOnly, toolAssignmentData, toolHomeworkData, updateToolHomeworkData }) => {
-  const [screen, setScreen] = useState(HOMEWORK_SCREEN.observation);
+export const ToolHomework = ({
+  isReadOnly,
+  toolAssignmentData,
+  toolHomeworkData,
+  updateToolHomeworkData,
+  setSubmitEnabled
+}) => {
+  const [screen, setScreen] = useState(HOMEWORK_SCREEN.intro);
   const [chartType, setChartType] = useState("ScatterChart");
   const [chartOptions, setChartOptions] = useState({});
   const [observations, setObservations] = useState("");
 
   const tableData = JSON.parse(toolAssignmentData.tableData);
+
+  useEffect(() => {
+    const wordCount = calculateWordCount(observations);
+    const minWordCount = toolAssignmentData.minWordCount;
+    const isValidHomework = wordCount >= minWordCount && Object.keys(chartOptions).length > 0;
+
+    setSubmitEnabled(isValidHomework);
+  }, [chartOptions, observations, setSubmitEnabled, toolAssignmentData.minWordCount]);
 
   if (isReadOnly) {
     return (

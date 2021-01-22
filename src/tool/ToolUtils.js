@@ -39,3 +39,10 @@ export function calcAutoScore(assignment, homework) {
 
   return 100; // GOGO-TODO
 }
+
+export const calculateWordCount = (text) => {
+  return text
+    .replace(/[^A-Za-z\s]/g, '').split(" ")
+    .filter(token => token)
+    .length;
+}

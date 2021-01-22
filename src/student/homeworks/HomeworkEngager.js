@@ -29,6 +29,7 @@ function HomeworkEngager(props) {
 	const activeUser = useSelector(state => state.app.activeUser);
 	const [toolHomeworkData, setToolHomeworkData] = useState(Object.assign({}, homework.toolHomeworkData));
   const [activeModal, setActiveModal] = useState(null);
+  const [isSubmitEnabled, setSubmitEnabled] = useState(false);
 
 
 	async function submitHomeworkForReview() {
@@ -122,7 +123,12 @@ function HomeworkEngager(props) {
 		<Fragment>
       {activeModal && renderModal()}
       <HeaderBar title={assignment.title}>
-        <Button onClick={() => setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})}>Submit</Button>
+        <Button
+          disabled={!isSubmitEnabled}
+          onClick={() => setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})}
+        >
+          Submit
+        </Button>
       </HeaderBar>
 
       <ToolHomework
@@ -132,6 +138,7 @@ function HomeworkEngager(props) {
         toolHomeworkData={toolHomeworkData}
         updateToolHomeworkData={handleHomeworkDataChange}
         triggerAutoSave={autoSave}
+        setSubmitEnabled={setSubmitEnabled}
       />
 		</Fragment>
 	)
