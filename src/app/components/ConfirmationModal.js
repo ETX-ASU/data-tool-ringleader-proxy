@@ -1,10 +1,10 @@
 import React from "react";
 import {Modal, Button} from "react-bootstrap";
-
+import styles from "./ConfirmationModal.module.scss";
 
 function ConfirmationModal(props) {
   return(
-    <Modal show={true} onHide={props.onHide}>
+    <Modal show={true} onHide={props.onHide} className={styles.confirmationModal}>
       <Modal.Header>
         <Modal.Title>{props.title}</Modal.Title>
       </Modal.Header>

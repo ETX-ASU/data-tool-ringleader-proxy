@@ -3,6 +3,7 @@ import { HomeworkIntro } from "./components/HomeworkIntro/HomeworkIntro";
 import { HomeworkEditor } from "./components/HomeworkEditor/HomeworkEditor";
 import { HomeworkObservation } from "./components/HomeworkObservation/HomeworkObservation";
 import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkContainter";
+import { HomeworkPreview } from "./components/HomeworkPreview/HomeworkPreview";
 import { calculateWordCount } from "./ToolUtils";
 import { HOMEWORK_SCREEN } from "./constants";
 
@@ -22,6 +23,7 @@ export const ToolHomework = ({
 
   useEffect(() => {
     typeof updateToolHomeworkData === "function" && updateToolHomeworkData({
+      chartType,
       chartOptions: JSON.stringify(chartOptions),
       observations
     });
@@ -38,7 +40,12 @@ export const ToolHomework = ({
 
   if (isReadOnly) {
     return (
-      <div>read only homework here</div>
+      <HomeworkPreview
+        data={tableData}
+        chartType={toolHomeworkData.chartType}
+        chartOptions={JSON.parse(toolHomeworkData.chartOptions)}
+        observations={toolHomeworkData.observations}
+      />
     )
   }
 
