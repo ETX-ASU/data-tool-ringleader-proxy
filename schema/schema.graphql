@@ -38,6 +38,7 @@ type ToolAssignmentData {
 }
 
 type ToolHomeworkData {
+  chartType: String
   chartOptions: String
   observations: String
 }
