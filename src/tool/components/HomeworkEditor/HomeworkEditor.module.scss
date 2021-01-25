@@ -2,7 +2,13 @@
   height: 100%;
   
   .chartInvisible {
-    visibility: hidden;
+    .editChartButton {
+      display: none;
+    }
+
+    .chart {
+      visibility: hidden;
+    }
   }
 
   .chartVisible {

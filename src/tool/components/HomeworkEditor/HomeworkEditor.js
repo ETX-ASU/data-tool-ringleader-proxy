@@ -73,9 +73,10 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
       <div className={isChartVisible ? styles.chartVisible : styles.chartInvisible}>
         <div className={styles.buttons}>
           <HomeworkDataTable data={data} />
-          <Button variant="outline-success" size="sm" onClick={openEditor}>Edit chart</Button>
+          <Button variant="outline-success" size="sm" onClick={openEditor} className={styles.editChartButton}>Edit chart</Button>
         </div>
         <Chart
+          className={styles.chart}
           chartType={chartType}
           data={data}
           height={`${chartHeight}px`}

@@ -1,7 +1,6 @@
 const headerHeight = 66;
-// const footerHeight = 60;
 const modalPadding = 30;
-const infoMargin = 40;
+const infoMargin = 40 + 34;
 
 export const generateChartEditorStyles = () => {
   const { height: chartInfoHeight } = document.querySelector(".chart-info").getBoundingClientRect();

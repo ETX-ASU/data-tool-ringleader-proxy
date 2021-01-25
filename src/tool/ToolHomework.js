@@ -14,7 +14,7 @@ export const ToolHomework = ({
   updateToolHomeworkData,
   setSubmitEnabled
 }) => {
-  const [screen, setScreen] = useState(HOMEWORK_SCREEN.intro);
+  const [screen, setScreen] = useState(HOMEWORK_SCREEN.editor);
   const [chartType, setChartType] = useState("ScatterChart");
   const [chartOptions, setChartOptions] = useState({});
   const [observations, setObservations] = useState("");
