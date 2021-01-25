@@ -21,8 +21,10 @@ export const TextEditor = ({ value, setValue, minWordCount }) => {
         value={value}
         onChange={handleChange}
       />
+      <div></div>
       <p className={styles.wordCount}>
-        Word #: {wordCount} / {minWordCount}
+        <span>Words: {wordCount}</span>
+        <span>Required words: {minWordCount}</span>
       </p>
     </>
   )
