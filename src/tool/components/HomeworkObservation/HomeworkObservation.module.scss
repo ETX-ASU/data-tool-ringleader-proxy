@@ -53,3 +53,13 @@
   display: block;
   width: 100%;
 }
+
+.sampleObservationDialog {
+  > div {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    padding: 0;
+    position: relative;
+  }
+}

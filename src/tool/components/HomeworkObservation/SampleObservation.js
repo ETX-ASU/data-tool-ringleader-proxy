@@ -18,7 +18,7 @@ export const SampleObservation = () => {
       <Modal
         animation={false}
         centered
-        className={styles.tablePreviewDialog}
+        className={styles.sampleObservationDialog}
         onHide={handleHide}
         show={isVisible}
       >
