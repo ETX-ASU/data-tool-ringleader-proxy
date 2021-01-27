@@ -11,6 +11,8 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
   const [chartWrapper, setChartWrapper] = useState(null);
   const [isChartVisible, setChartVisible] = useState(false);
   const [chartHeight, setChartHeight] = useState(0);
+  const [previousOptions, setPreviousOptions] = useState(chartOptions);
+  const [previousType, setPreviousType] = useState(chartType);
 
   const handleOkClick = useCallback(() => {
     const newChartWrapper = chartEditor.getChartWrapper();
@@ -22,19 +24,23 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
     const newChartType = newChartWrapper.getChartType();
 
     setChartType(newChartType);
-    setChartOptions(newChartOptions);
+    setChartOptions({ ...newChartOptions });
   }, [chartEditor, setChartOptions, setChartType]);
 
   const handleCancelClick = useCallback(() => {
     setChartVisible(true);
-  }, []);
+    setChartOptions({ ...previousOptions });
+    setChartType(previousType);
+  }, [previousOptions, previousType, setChartOptions, setChartType]);
 
   const openEditor = useCallback(() => {
     if (chartEditor) {
       setChartVisible(false);
+      setPreviousOptions({ ...chartOptions });
+      setPreviousType(chartType);
       chartEditor.openDialog(chartWrapper);
     }
-  }, [chartEditor, chartWrapper]);
+  }, [chartEditor, chartOptions, chartType, chartWrapper]);
 
   useEffect(() => {
     const isEditorAvailable = chartWrapper !== null && google !== null && chartEditor !== null;
@@ -49,9 +55,11 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
     const isEditorAvailable = chartWrapper !== null && google !== null && chartEditor !== null;
 
     if (isEditorAvailable && Object.keys(chartOptions).length === 0) {
+      setPreviousOptions(chartOptions);
+      setPreviousType(chartType);
       chartEditor.openDialog(chartWrapper)
     }
-  }, [chartEditor, chartOptions, chartWrapper, google]);
+  }, [chartEditor, chartOptions, chartType, chartWrapper, google]);
 
   useEffect(() => {
     if (Object.keys(chartOptions).length > 0) {
@@ -85,7 +93,11 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
             setChartEditor(chartEditor);
             setChartWrapper(chartWrapper);
           }}
-          options={chartOptions}
+          options={{
+            ...chartOptions,
+            height: `${chartHeight}px`,
+            width: undefined
+          }}
           chartPackages={["corechart", "controls", "charteditor"]}
         />
       </div>
