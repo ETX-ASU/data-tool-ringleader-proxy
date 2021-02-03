@@ -10,7 +10,6 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
   const [chartEditor, setChartEditor] = useState(null);
   const [chartWrapper, setChartWrapper] = useState(null);
   const [isChartVisible, setChartVisible] = useState(false);
-  const [chartHeight, setChartHeight] = useState(0);
   const [previousOptions, setPreviousOptions] = useState(chartOptions);
   const [previousType, setPreviousType] = useState(chartType);
 
@@ -20,8 +19,11 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
     newChartWrapper.draw();
     setChartVisible(true);
 
-    const newChartOptions = newChartWrapper.getOptions();
+    let newChartOptions = newChartWrapper.getOptions();
     const newChartType = newChartWrapper.getChartType();
+
+    delete newChartOptions.width;
+    delete newChartOptions.height;
 
     setChartType(newChartType);
     setChartOptions({ ...newChartOptions });
@@ -68,8 +70,7 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
   }, [chartOptions]);
 
   useEffect(() => {
-    const { height } = generateChartEditorStyles();
-    setChartHeight(height);
+    generateChartEditorStyles();
   }, []);
 
   return (
@@ -87,17 +88,14 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
           className={styles.chart}
           chartType={chartType}
           data={data}
-          height={`${chartHeight}px`}
+          height="450px"
+          width="910px"
           getChartEditor={({ chartEditor, chartWrapper, google }) => {
             setGoogle(google);
             setChartEditor(chartEditor);
             setChartWrapper(chartWrapper);
           }}
-          options={{
-            ...chartOptions,
-            height: `${chartHeight}px`,
-            width: undefined
-          }}
+          options={{ ...chartOptions }}
           chartPackages={["corechart", "controls", "charteditor"]}
         />
       </div>

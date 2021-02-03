@@ -29,6 +29,12 @@ h1, h2, h3, h4, h5 {
   }
 }
 
+.app {
+  @media (max-width: 1024px) {
+    margin-bottom: 0 !important;
+  }
+}
+
 input, .form-control {
   border-color: var(--x-med-gray) !important;
 
@@ -113,6 +119,10 @@ h4 {
 .dashboard {
   min-height: calc(100vh - 80px - 3rem);
   font-family: 'Arial', 'Regular', sans-serif;
+
+  @media (max-width: 1024px) {
+    min-height: calc(100vh - 40px);
+  }
 }
 
 .screen-header-bar {
@@ -314,3 +324,12 @@ label {
   margin: 0 40px 0 10px;
 }
 
+.modal-dialog-title-draggable {
+  margin-bottom: 0 !important;
+}
+
+.modal-dialog {
+  @media (max-width: 1024px) {
+    padding: 20px 32px;
+  }
+}

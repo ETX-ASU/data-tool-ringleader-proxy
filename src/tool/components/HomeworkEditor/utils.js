@@ -22,5 +22,7 @@ export const generateChartEditorStyles = () => {
 
   document.head.appendChild(style);
 
-  return { height: editorHeight - infoMargin };
+  const chartHeight = editorHeight - infoMargin;
+
+  return { height: chartHeight };
 }
