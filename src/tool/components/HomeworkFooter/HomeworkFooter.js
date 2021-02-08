@@ -5,7 +5,7 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import { HOMEWORK_SCREEN, SCREEN_ORDER } from "../../constants";
 import styles from "./HomeworkFooter.module.scss";
 
-export const HomeworkFooter = ({ screen, setScreen }) => {
+export const HomeworkFooter = ({ screen, setScreen, canShowNavButtons }) => {
   const handlePrevPageClick = useCallback(() => {
     const screenIndex = SCREEN_ORDER.indexOf(screen)
     if (screenIndex > 0) {
@@ -23,7 +23,7 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
   return (
     <div className={styles.footer}>
       <div>
-        {screen !== HOMEWORK_SCREEN.intro && (
+        {screen !== HOMEWORK_SCREEN.intro && canShowNavButtons && (
           <Button
             type="button"
             className="btn btn-secondary"
@@ -35,7 +35,7 @@ export const HomeworkFooter = ({ screen, setScreen }) => {
         )}
       </div>
       <div>
-        {screen !== HOMEWORK_SCREEN.observation && (
+        {screen !== HOMEWORK_SCREEN.observation && canShowNavButtons && (
           <Button
             type="button"
             className="btn btn-secondary"

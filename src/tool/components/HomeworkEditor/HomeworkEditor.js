@@ -5,7 +5,7 @@ import { HomeworkDataTable } from "../HomeworkDataTable/HomeworkDataTable";
 import { generateChartEditorStyles } from "./utils";
 import styles from "./HomeworkEditor.module.scss";
 
-export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions, setChartType }) => {
+export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions, setChartType, setCanShowNavButtons }) => {
   const [google, setGoogle] = useState(null);
   const [chartEditor, setChartEditor] = useState(null);
   const [chartWrapper, setChartWrapper] = useState(null);
@@ -27,22 +27,25 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
 
     setChartType(newChartType);
     setChartOptions({ ...newChartOptions });
-  }, [chartEditor, setChartOptions, setChartType]);
+    setCanShowNavButtons(true);
+  }, [chartEditor, setCanShowNavButtons, setChartOptions, setChartType]);
 
   const handleCancelClick = useCallback(() => {
     setChartVisible(true);
     setChartOptions({ ...previousOptions });
     setChartType(previousType);
-  }, [previousOptions, previousType, setChartOptions, setChartType]);
+    setCanShowNavButtons(true);
+  }, [previousOptions, previousType, setCanShowNavButtons, setChartOptions, setChartType]);
 
   const openEditor = useCallback(() => {
     if (chartEditor) {
       setChartVisible(false);
       setPreviousOptions({ ...chartOptions });
       setPreviousType(chartType);
+      setCanShowNavButtons(false);
       chartEditor.openDialog(chartWrapper);
     }
-  }, [chartEditor, chartOptions, chartType, chartWrapper]);
+  }, [chartEditor, chartOptions, chartType, chartWrapper, setCanShowNavButtons]);
 
   useEffect(() => {
     const isEditorAvailable = chartWrapper !== null && google !== null && chartEditor !== null;
@@ -59,9 +62,10 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
     if (isEditorAvailable && Object.keys(chartOptions).length === 0) {
       setPreviousOptions(chartOptions);
       setPreviousType(chartType);
+      setCanShowNavButtons(false);
       chartEditor.openDialog(chartWrapper)
     }
-  }, [chartEditor, chartOptions, chartType, chartWrapper, google]);
+  }, [chartEditor, chartOptions, chartType, chartWrapper, google, setCanShowNavButtons]);
 
   useEffect(() => {
     if (Object.keys(chartOptions).length > 0) {
