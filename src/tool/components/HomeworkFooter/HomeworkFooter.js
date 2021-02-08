@@ -20,10 +20,14 @@ export const HomeworkFooter = ({ screen, setScreen, canShowNavButtons }) => {
     }
   }, [screen, setScreen]);
 
+  if (!canShowNavButtons) {
+    return null;
+  }
+
   return (
     <div className={styles.footer}>
       <div>
-        {screen !== HOMEWORK_SCREEN.intro && canShowNavButtons && (
+        {screen !== HOMEWORK_SCREEN.intro && (
           <Button
             type="button"
             className="btn btn-secondary"
@@ -35,7 +39,7 @@ export const HomeworkFooter = ({ screen, setScreen, canShowNavButtons }) => {
         )}
       </div>
       <div>
-        {screen !== HOMEWORK_SCREEN.observation && canShowNavButtons && (
+        {screen !== HOMEWORK_SCREEN.observation && (
           <Button
             type="button"
             className="btn btn-secondary"
