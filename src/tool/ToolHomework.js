@@ -22,13 +22,23 @@ export const ToolHomework = ({
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
   useEffect(() => {
+    if (isReadOnly) {
+      setChartType(toolHomeworkData.chartType);
+    }
+  }, [isReadOnly, toolHomeworkData.chartType]);
+
+  if (chartType === "PieChart" && tableData.cols[0].type === "date") {
+    tableData.cols[0].type = "string";
+  }
+
+  useEffect(() => {
     typeof updateToolHomeworkData === "function" && updateToolHomeworkData({
       chartType,
       chartOptions: JSON.stringify(chartOptions),
       observations
     });
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [chartOptions, observations]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartOptions, observations]);
 
   useEffect(() => {
     const wordCount = calculateWordCount(observations);
@@ -42,7 +52,7 @@ export const ToolHomework = ({
     return (
       <HomeworkPreview
         data={tableData}
-        chartType={toolHomeworkData.chartType}
+        chartType={chartType}
         chartOptions={JSON.parse(toolHomeworkData.chartOptions)}
         observations={toolHomeworkData.observations}
       />

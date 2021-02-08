@@ -13,6 +13,7 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
   const [previousOptions, setPreviousOptions] = useState(chartOptions);
   const [previousType, setPreviousType] = useState(chartType);
 
+
   const handleOkClick = useCallback(() => {
     const newChartWrapper = chartEditor.getChartWrapper();
 
