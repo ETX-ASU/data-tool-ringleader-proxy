@@ -20,21 +20,21 @@ export function getNewToolHomeworkDataForAssignment(assignment) {
 export function calcPercentCompleted(assignment, homework) {
   // TOOL-DEV: Create a method to calculate and return a percentage of the work a student completed on their homework)
   // This should be returned as a number between 0 and 100
-  if (!homework?.id || !homework?.beganOnDate) {
+  if (!homework?.id || !homework?.beganOnDate || !homework.toolHomeworkData.observations.length) {
     return 0;
   }
 
-  return 100; // GOGO-TODO
+  return 100;
 }
 
 export function calcAutoScore(assignment, homework) {
   // TOOL-DEV: Given the assignment data and a student's current homework data, provide a method to return the grade a  student
   // should receive for their work. The should not go below 0, and should never exceed the value returned by calcMaxScoreForAssignment()
-  if (!homework?.id || !homework?.beganOnDate) {
+  if (!homework?.id || !homework?.beganOnDate || !homework.toolHomeworkData.observations.length) {
     return 0;
   }
 
-  return 100; // GOGO-TODO
+  return 100;
 }
 
 export const calculateWordCount = (text) => {
