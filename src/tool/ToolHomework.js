@@ -78,6 +78,7 @@ export const ToolHomework = ({
       )}
       {screen === HOMEWORK_SCREEN.observation && (
         <HomeworkObservation
+          objective={toolAssignmentData.objective}
           observations={observations}
           chartData={tableData}
           chartType={chartType}

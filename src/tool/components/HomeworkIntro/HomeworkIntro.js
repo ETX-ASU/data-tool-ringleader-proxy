@@ -15,7 +15,7 @@ export const HomeworkIntro = ({ data, objective }) => {
   return (
     <div className={styles.homeworkIntro} ref={introRef}>
       <div className={styles.info}>
-        The table below displays the data that you will use for this assignment. Your objective is to select a graph type and manipulate the graph in order to accurately display the data. Take a moment to look over the data and any additional information, then when you are ready to procede, click next.
+      The table below displays the data that you will use for this assignment. Your objective is to select a graph type and manipulate the chart considering the objective below. Take a moment to look over the data and any additional information, then when you are ready to proceed, click next.
       </div>
       <Row>
         <Col>
@@ -31,7 +31,7 @@ export const HomeworkIntro = ({ data, objective }) => {
           </div>
         </Col>
         <Col>
-          <h3>Additional Information</h3>
+          <h3>Objective</h3>
           <div className={styles.objective}>
             {objective}
           </div>
