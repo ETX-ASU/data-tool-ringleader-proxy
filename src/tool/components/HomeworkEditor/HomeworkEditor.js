@@ -5,6 +5,8 @@ import { HomeworkDataTable } from "../HomeworkDataTable/HomeworkDataTable";
 import { generateChartEditorStyles } from "./utils";
 import styles from "./HomeworkEditor.module.scss";
 
+const defaultChartHeight = 450;
+
 export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions, setChartType, setCanShowNavButtons }) => {
   const [google, setGoogle] = useState(null);
   const [chartEditor, setChartEditor] = useState(null);
@@ -12,6 +14,7 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
   const [isChartVisible, setChartVisible] = useState(false);
   const [previousOptions, setPreviousOptions] = useState(chartOptions);
   const [previousType, setPreviousType] = useState(chartType);
+  const [chartHeight, setChartHeight] = useState(defaultChartHeight);
 
 
   const handleOkClick = useCallback(() => {
@@ -74,9 +77,22 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
     }
   }, [chartOptions]);
 
-  useEffect(() => {
-    generateChartEditorStyles();
+  const resizeChartEditor = useCallback(() => {
+    const { height } = generateChartEditorStyles();
+    setChartHeight(height);
   }, []);
+
+  useEffect(() => {
+    resizeChartEditor();
+  }, [resizeChartEditor]);
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeChartEditor);
+
+    return () => {
+      window.removeEventListener("resize", resizeChartEditor);
+    }
+  }, [resizeChartEditor]);
 
   return (
     <div className={styles.homeworkEditor}>
@@ -89,20 +105,22 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
           <HomeworkDataTable data={data} />
           <Button variant="outline-success" size="sm" onClick={openEditor} className={styles.editChartButton}>Edit chart</Button>
         </div>
-        <Chart
-          className={styles.chart}
-          chartType={chartType}
-          data={data}
-          height="450px"
-          width="910px"
-          getChartEditor={({ chartEditor, chartWrapper, google }) => {
-            setGoogle(google);
-            setChartEditor(chartEditor);
-            setChartWrapper(chartWrapper);
-          }}
-          options={{ ...chartOptions }}
-          chartPackages={["corechart", "controls", "charteditor"]}
-        />
+        <div className={styles.chartContainer} style={{ height: chartHeight }}>
+          <Chart
+            className={styles.chart}
+            chartType={chartType}
+            data={data}
+            height="450px"
+            width="100%"
+            getChartEditor={({ chartEditor, chartWrapper, google }) => {
+              setGoogle(google);
+              setChartEditor(chartEditor);
+              setChartWrapper(chartWrapper);
+            }}
+            options={{ ...chartOptions }}
+            chartPackages={["corechart", "controls", "charteditor"]}
+          />
+        </div>
       </div>
     </div>
   )
