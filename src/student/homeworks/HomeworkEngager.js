@@ -1,8 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {ACTIVITY_PROGRESS, HOMEWORK_PROGRESS, MODAL_TYPES, UI_SCREEN_MODES} from "../../app/constants";
-import {Button} from 'react-bootstrap';
+import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {updateHomework as updateHomeworkMutation} from "../../graphql/mutations";
 import {API} from "aws-amplify";
 import {setActiveUiScreenMode} from "../../app/store/appReducer";
@@ -15,6 +15,8 @@ import ConfirmationModal from "../../app/components/ConfirmationModal";
 import { ToolHomework } from "../../tool/ToolHomework";
 import {sendAutoGradeToLMS} from "../../lmsConnection/RingLeader";
 import {calcAutoScore, calcMaxScoreForAssignment} from "../../tool/ToolUtils";
+import { FullscreenOverlay } from '../../tool/components/FullscreenOverlay/FullscreenOverlay';
+import styles from "./HomeworkEngager.module.scss";
 
 library.add(faCheck, faTimes);
 
@@ -30,10 +32,41 @@ function HomeworkEngager(props) {
 	const [toolHomeworkData, setToolHomeworkData] = useState(Object.assign({}, homework.toolHomeworkData));
   const [activeModal, setActiveModal] = useState(null);
   const [isSubmitEnabled, setSubmitEnabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleSaveButtonClick = async () => {
+    setIsSubmitting(true);
+
+    try {
+      const inputData = Object.assign({}, homework, {
+        toolHomeworkData
+      });
+
+      delete inputData.createdAt;
+      delete inputData.updatedAt;
+      delete inputData.activityProgress;
+      delete inputData.homeworkStatus;
+      delete inputData.gradingProgress;
+      delete inputData.scoreGiven;
+      delete inputData.scoreMaximum;
+      delete inputData.comment;
+
+      const result = await API.graphql({query: updateHomeworkMutation, variables: {input: inputData}});
+      setIsSubmitting(false);
+      if (result) {
+        if (assignment.isUseAutoSubmit) await calcAndSendScore(inputData);
+        await setActiveModal({type: MODAL_TYPES.confirmHomeworkSaved})
+      } else {
+        reportError('', `We're sorry. There was a problem saving your homework. Please wait a moment and try again.`);
+      }
+    } catch (error) {
+      reportError(error, `We're sorry. There was a problem saving your homework. Please wait a moment and try again.`);
+    }
+  };
 
 	async function submitHomeworkForReview() {
     setActiveModal(null);
+    setIsSubmitting(true);
 
     try {
       const inputData = Object.assign({}, homework, {
@@ -51,6 +84,8 @@ function HomeworkEngager(props) {
       delete inputData.comment;
 
       const result = await API.graphql({query: updateHomeworkMutation, variables: {input: inputData}});
+      setIsSubmitting(false);
+
       if (result) {
         if (assignment.isUseAutoSubmit) await calcAndSendScore(inputData);
         await setActiveModal({type: MODAL_TYPES.confirmHomeworkSubmitted})
@@ -81,7 +116,12 @@ function HomeworkEngager(props) {
     }
   }
 
+  async function closeSaveModal() {
+    setActiveModal(null);
+  }
+
   async function closeModalAndReview() {
+    setIsSubmitting(true);
     setActiveModal(null);
     await props.refreshHandler();
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.reviewHomework));
@@ -99,37 +139,63 @@ function HomeworkEngager(props) {
     switch (activeModal.type) {
       case MODAL_TYPES.warningBeforeHomeworkSubmission:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Are you sure?'} buttons={[
+          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Are you sure?'} isStatic buttons={[
             {name:'Cancel', onClick: () => setActiveModal(null)},
             {name:'Submit', onClick:submitHomeworkForReview},
           ]}>
             <p>Once submitted, you cannot go back to make additional edits to your assignment.</p>
           </ConfirmationModal>
         )
+
       case MODAL_TYPES.confirmHomeworkSubmitted:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Submitted!'} buttons={[
+          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Submitted!'} isStatic buttons={[
             {name:'Review', onClick:closeModalAndReview},
           ]}>
             <p>You can now review your submitted assignment.</p>
           </ConfirmationModal>
         )
+
+      case MODAL_TYPES.confirmHomeworkSaved: 
+          return (
+          <ConfirmationModal isStatic title={'Saved!'} buttons={[
+            {name:'OK', onClick:closeSaveModal},
+          ]}>
+            <p>You homework is saved. You can continue editing or close this window and come back later.</p>
+          </ConfirmationModal>
+          )
       default:
         return null;
     }
   }
 
+  const handleSubmitButtonClick = useCallback(() => {
+    setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})
+  }, [])
+
 	return (
 		<Fragment>
       {activeModal && renderModal()}
       <HeaderBar title={assignment.title}>
-        <Button
-          disabled={!isSubmitEnabled}
-          onClick={() => setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})}
-        >
-          Submit
-        </Button>
+        <Button onClick={handleSaveButtonClick}>Save</Button>
+        &nbsp;
+        {isSubmitEnabled ? (
+          <Button onClick={handleSubmitButtonClick}>Submit</Button>
+        ) : (
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="submit-button-tooltip">
+                You can't submit your work until you enter required number of words in the text area on the last page.
+              </Tooltip>
+            }
+          >
+            <Button className={styles.disabledButton} type="button">Submit</Button>
+          </OverlayTrigger>
+        )}
       </HeaderBar>
+
+      {isSubmitting && <FullscreenOverlay />}
 
       <ToolHomework
         isReadOnly={false}

@@ -17,7 +17,7 @@ library.add(faArrowCircleLeft, faArrowCircleRight, faCheck);
 
 function GradingBar(props) {
   const dispatch = useDispatch();
-  const {assignment, reviewedStudent} = props;
+  const {assignment, reviewedStudent, isUseAutoScore} = props;
 
   const displayOrder = useSelector(state => state.app.displayOrder);
   const [scoreGiven, setScoreGiven] = useState(calcShownScore(reviewedStudent));
@@ -84,10 +84,12 @@ function GradingBar(props) {
                   {STATUS_TEXT[reviewedStudent.homeworkStatus]}</span>
               </Col>
               <Col className='col-8 pt-1 pb-2 xbg-light'>
-                <div className='ml-0 mr-4 d-inline-block align-top'>
-                  <label htmlFor='autoScore' className='xtext-darkest'>Auto Score</label>
-                  <div id={`yourScore`}>{`${reviewedStudent.autoScore} of ${calcMaxScoreForAssignment(assignment)}`}</div>
-                </div>
+                {isUseAutoScore && (
+                  <div className='ml-0 mr-4 d-inline-block align-top'>
+                    <label htmlFor='autoScore' className='xtext-darkest'>Auto Score</label>
+                    <div id={`yourScore`}>{`${reviewedStudent.autoScore} of ${calcMaxScoreForAssignment(assignment)}`}</div>
+                  </div>
+                )}
                 <div className='mr-4 d-inline-block align-top'>
                   <label htmlFor='yourScore' className='xtext-darkest'>Given Score</label>
                   <input id={`yourScore`}
