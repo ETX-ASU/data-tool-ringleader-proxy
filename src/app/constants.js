@@ -13,7 +13,8 @@ export const MODAL_TYPES = {
   warningBeforeHomeworkSubmission: "warningBeforeHomeworkSubmission",
   showBatchSubmitOptions: "showBatchSubmitOptions",
   showWaitingForGrades: "showWaitingForGrades",
-  chooseLinkOrDelete: "chooseLinkOrDelete"
+  chooseLinkOrDelete: "chooseLinkOrDelete",
+  confirmHomeworkSaved: "confirmHomeworkSaved"
 }
 
 export const SORT_BY = {

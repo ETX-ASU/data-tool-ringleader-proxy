@@ -34,6 +34,36 @@ function HomeworkEngager(props) {
   const [isSubmitEnabled, setSubmitEnabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleSaveButtonClick = async () => {
+    setIsSubmitting(true);
+
+    try {
+      const inputData = Object.assign({}, homework, {
+        toolHomeworkData
+      });
+
+      delete inputData.createdAt;
+      delete inputData.updatedAt;
+      delete inputData.activityProgress;
+      delete inputData.homeworkStatus;
+      delete inputData.gradingProgress;
+      delete inputData.scoreGiven;
+      delete inputData.scoreMaximum;
+      delete inputData.comment;
+
+      const result = await API.graphql({query: updateHomeworkMutation, variables: {input: inputData}});
+      setIsSubmitting(false);
+      if (result) {
+        if (assignment.isUseAutoSubmit) await calcAndSendScore(inputData);
+        await setActiveModal({type: MODAL_TYPES.confirmHomeworkSaved})
+      } else {
+        reportError('', `We're sorry. There was a problem saving your homework. Please wait a moment and try again.`);
+      }
+    } catch (error) {
+      reportError(error, `We're sorry. There was a problem saving your homework. Please wait a moment and try again.`);
+    }
+  };
+
 	async function submitHomeworkForReview() {
     setActiveModal(null);
     setIsSubmitting(true);
@@ -86,6 +116,10 @@ function HomeworkEngager(props) {
     }
   }
 
+  async function closeSaveModal() {
+    setActiveModal(null);
+  }
+
   async function closeModalAndReview() {
     setIsSubmitting(true);
     setActiveModal(null);
@@ -112,6 +146,7 @@ function HomeworkEngager(props) {
             <p>Once submitted, you cannot go back to make additional edits to your assignment.</p>
           </ConfirmationModal>
         )
+
       case MODAL_TYPES.confirmHomeworkSubmitted:
         return (
           <ConfirmationModal onHide={() => setActiveModal(null)} title={'Submitted!'} isStatic buttons={[
@@ -120,6 +155,15 @@ function HomeworkEngager(props) {
             <p>You can now review your submitted assignment.</p>
           </ConfirmationModal>
         )
+
+      case MODAL_TYPES.confirmHomeworkSaved: 
+          return (
+          <ConfirmationModal isStatic title={'Saved!'} buttons={[
+            {name:'OK', onClick:closeSaveModal},
+          ]}>
+            <p>You homework is saved. You can continue editing or close this window and come back later.</p>
+          </ConfirmationModal>
+          )
       default:
         return null;
     }
@@ -133,6 +177,8 @@ function HomeworkEngager(props) {
 		<Fragment>
       {activeModal && renderModal()}
       <HeaderBar title={assignment.title}>
+        <Button onClick={handleSaveButtonClick}>Save</Button>
+        &nbsp;
         {isSubmitEnabled ? (
           <Button onClick={handleSubmitButtonClick}>Submit</Button>
         ) : (

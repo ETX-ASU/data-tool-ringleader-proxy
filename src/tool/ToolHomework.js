@@ -18,9 +18,11 @@ export const ToolHomework = ({
   const [chartType, setChartType] = useState("ScatterChart");
   const [chartOptions, setChartOptions] = useState({});
   const [observations, setObservations] = useState("");
+  const [hasSavedWork, setHasSavedWork] = useState(
+    toolHomeworkData.chartOptions !== "{}" || toolHomeworkData.observations.length !== 0
+  )
 
   const tableData = JSON.parse(toolAssignmentData.tableData);
-
   tableData.cols = tableData.cols.map(({ pattern, ...col }) => {
     if (pattern === "General") {
       return col
@@ -43,13 +45,24 @@ export const ToolHomework = ({
   }
 
   useEffect(() => {
-    typeof updateToolHomeworkData === "function" && updateToolHomeworkData({
-      chartType,
-      chartOptions: JSON.stringify(chartOptions),
-      observations
-    });
+    if (hasSavedWork) {
+      setChartOptions(JSON.parse(toolHomeworkData.chartOptions));
+      setChartType(toolHomeworkData.chartType);
+      setObservations(toolHomeworkData.observations);
+      setHasSavedWork(false);
+    }
+  }, [hasSavedWork, toolHomeworkData.chartOptions, toolHomeworkData.chartType, toolHomeworkData.observations]);
+
+  useEffect(() => {
+    if (!hasSavedWork && typeof updateToolHomeworkData === "function") {
+      updateToolHomeworkData({
+        chartType,
+        chartOptions: JSON.stringify(chartOptions),
+        observations
+      });
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartOptions, observations]);
+  }, [hasSavedWork, chartOptions, observations]);
 
   useEffect(() => {
     const wordCount = calculateWordCount(observations);
