@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useState} from 'react';
+import React, {Fragment, useCallback, useMemo, useState} from 'react';
 import {API} from 'aws-amplify';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,7 +9,7 @@ import {MODAL_TYPES, UI_SCREEN_MODES} from "../../app/constants";
 import {setActiveUiScreenMode} from "../../app/store/appReducer";
 import "./assignments.scss";
 
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row, OverlayTrigger, Tooltip} from "react-bootstrap";
 import HeaderBar from "../../app/components/HeaderBar";
 import ToggleSwitch from "../../app/components/ToggleSwitch";
 
@@ -19,6 +19,7 @@ import {reportError} from "../../developer/DevUtils";
 import {/*createAssignmentInLms,*/ handleConnectToLMS} from "../../lmsConnection/RingLeader";
 import { EMPTY_TOOL_ASSIGNMENT_DATA } from '../../tool/constants';
 // import {calcMaxScoreForAssignment} from "../../tool/ToolUtils";
+import styles from "./AssignmentCreator.module.scss";
 
 const emptyAssignment = {
   id: '',
@@ -113,12 +114,29 @@ function AssignmentCreator() {
     }
   }
 
+  const canCreateAssignment = useMemo(() => {
+    return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
+  }, [formData.title, formData.toolAssignmentData.objective, formData.toolAssignmentData.tableData])
+
 	return (
     <Fragment>
       {activeModal && renderModal()}
       <HeaderBar title='Create New Assignment'>
         <Button onClick={() => setActiveModal({type: MODAL_TYPES.cancelNewAssignmentEditsWarning})} className='mr-2'>Cancel</Button>
-        <Button onClick={handleSubmitBtn}>Create</Button>
+        {canCreateAssignment ? (
+          <Button onClick={handleSubmitBtn}>Create</Button>
+        ) : (
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="submit-button-tooltip">
+                Please enter the assignment title, objective and data source url.
+              </Tooltip>
+            }
+          >
+            <Button className={styles.disabledButton} type="button">Create</Button>
+          </OverlayTrigger>
+        )}
       </HeaderBar>
 
       <form>
