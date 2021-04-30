@@ -22,6 +22,17 @@ export const ToolHomework = ({
 
   const tableData = JSON.parse(toolAssignmentData.tableData);
 
+  tableData.cols = tableData.cols.map(({ pattern, ...col }) => {
+    if (pattern === "General") {
+      return col
+    }
+
+    return {
+      ...col,
+      pattern
+    }
+  })
+
   useEffect(() => {
     if (isReadOnly) {
       setChartType(toolHomeworkData.chartType);
