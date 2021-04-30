@@ -89,12 +89,17 @@ function AssignmentCreator() {
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.returnToLmsScreen))
   }
 
+  function handleCancelCreatingAssignment() {
+    setActiveModal(null);
+    dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.createOrDupeAssignment))
+  }
+
   function renderModal() {
     switch (activeModal.type) {
       case MODAL_TYPES.cancelNewAssignmentEditsWarning:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Cancel Creation Warning'} buttons={[
-            {name: 'Cancel', onClick: handleReturnToCreateOrDupe},
+          <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Creation Warning'} buttons={[
+            {name: 'Cancel', onClick: handleCancelCreatingAssignment},
             {name: 'Continue Creating', onClick: () => setActiveModal(null)},
           ]}>
             <p>Do you want to cancel new assignment or continue editing?</p>
@@ -103,7 +108,7 @@ function AssignmentCreator() {
         );
       case MODAL_TYPES.confirmAssignmentSaved:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Assignment Saved'} buttons={[
+          <ConfirmationModal isStatic  onHide={() => setActiveModal(null)} title={'Assignment Saved'} buttons={[
             {name: 'Continue', onClick: handleReturnToCreateOrDupe},
           ]}>
             <p>Assignment has been saved! In order to access it, use this assignmentId: ${activeModal.id}</p>
