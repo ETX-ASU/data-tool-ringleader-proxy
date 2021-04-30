@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useState} from 'react';
+import React, {Fragment, useCallback, useMemo, useState} from 'react';
 import {API} from 'aws-amplify';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,16 +9,18 @@ import {MODAL_TYPES, UI_SCREEN_MODES} from "../../app/constants";
 import {setActiveUiScreenMode} from "../../app/store/appReducer";
 import "./assignments.scss";
 
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row, OverlayTrigger, Tooltip} from "react-bootstrap";
 import HeaderBar from "../../app/components/HeaderBar";
 import ToggleSwitch from "../../app/components/ToggleSwitch";
 
 import { ToolAssignment } from "../../tool/ToolAssignment";
+import { FullscreenOverlay } from "../../tool/components/FullscreenOverlay/FullscreenOverlay"
 import ConfirmationModal from "../../app/components/ConfirmationModal";
 import {reportError} from "../../developer/DevUtils";
 import {/*createAssignmentInLms,*/ handleConnectToLMS} from "../../lmsConnection/RingLeader";
 import { EMPTY_TOOL_ASSIGNMENT_DATA } from '../../tool/constants';
 // import {calcMaxScoreForAssignment} from "../../tool/ToolUtils";
+import styles from "./AssignmentCreator.module.scss";
 
 const emptyAssignment = {
   id: '',
@@ -46,9 +48,16 @@ function AssignmentCreator() {
 	const courseId = useSelector(state => state.app.courseId);
 	const [formData, setFormData] = useState(emptyAssignment);
   const [activeModal, setActiveModal] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const canCreateAssignment = useMemo(() => {
+    return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
+  }, [formData.title, formData.toolAssignmentData.objective, formData.toolAssignmentData.tableData])
 
   async function handleSubmitBtn() {
-    if (!formData.title) return;
+    if (!canCreateAssignment) return;
+
+    setIsSubmitting(true);
 
     const assignmentId = uuid();
     const inputData = Object.assign({}, formData, {
@@ -68,6 +77,7 @@ function AssignmentCreator() {
     } catch (error) {
       reportError(error, `We're sorry. There was a problem saving your new assignment.`);
     }
+    setIsSubmitting(false);
   }
 
   function toggleUseAutoScore(e) {
@@ -84,16 +94,22 @@ function AssignmentCreator() {
   }, [])
 
   function handleReturnToCreateOrDupe() {
+    setIsSubmitting(true);
     setActiveModal(null);
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.returnToLmsScreen))
+  }
+
+  function handleCancelCreatingAssignment() {
+    setActiveModal(null);
+    dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.createOrDupeAssignment))
   }
 
   function renderModal() {
     switch (activeModal.type) {
       case MODAL_TYPES.cancelNewAssignmentEditsWarning:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Cancel Creation Warning'} buttons={[
-            {name: 'Cancel', onClick: handleReturnToCreateOrDupe},
+          <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Creation Warning'} buttons={[
+            {name: 'Cancel', onClick: handleCancelCreatingAssignment},
             {name: 'Continue Creating', onClick: () => setActiveModal(null)},
           ]}>
             <p>Do you want to cancel new assignment or continue editing?</p>
@@ -102,7 +118,7 @@ function AssignmentCreator() {
         );
       case MODAL_TYPES.confirmAssignmentSaved:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Assignment Saved'} buttons={[
+          <ConfirmationModal isStatic  onHide={() => setActiveModal(null)} title={'Assignment Saved'} buttons={[
             {name: 'Continue', onClick: handleReturnToCreateOrDupe},
           ]}>
             <p>Assignment has been saved! In order to access it, use this assignmentId: ${activeModal.id}</p>
@@ -116,9 +132,22 @@ function AssignmentCreator() {
 	return (
     <Fragment>
       {activeModal && renderModal()}
-      <HeaderBar title='Create New Assignment - Proxy'>
+      <HeaderBar title='Create New Assignment'>
         <Button onClick={() => setActiveModal({type: MODAL_TYPES.cancelNewAssignmentEditsWarning})} className='mr-2'>Cancel</Button>
-        <Button onClick={handleSubmitBtn}>Create</Button>
+        {canCreateAssignment ? (
+          <Button onClick={handleSubmitBtn}>Create</Button>
+        ) : (
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="submit-button-tooltip">
+                Please enter the assignment title, objective and data source url.
+              </Tooltip>
+            }
+          >
+            <Button className={styles.disabledButton} type="button">Create</Button>
+          </OverlayTrigger>
+        )}
       </HeaderBar>
 
       <form>
@@ -164,6 +193,8 @@ function AssignmentCreator() {
         }
         </Container>
       </form>
+
+      {isSubmitting && <FullscreenOverlay />}
 
       {/*The assignment data collected here is specific to the tool, while the above assignment data is used in every tool*/}
       <ToolAssignment

@@ -141,10 +141,7 @@ function AssignmentNewOrDupe() {
 	return (
 		<Fragment>
       {activeModal && renderModal()}
-      <HeaderBar title='Create New Assignment' canCancel={false} canSave={false} >
-        <Button disabled className='mr-2'>Cancel</Button>
-        <Button disabled>Update</Button>
-      </HeaderBar>
+      <HeaderBar title='Create New Assignment' canCancel={false} canSave={false} />
 
       <Container className="m-2" style={{ position: "relative" }}>
         {isFetchingAssignments &&

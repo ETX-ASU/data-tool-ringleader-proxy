@@ -5,6 +5,14 @@
   }
 }
 
+.split {
+  display: flex;
+}
+
+.spliPane {
+  padding: 10px;
+}
+
 .info {
   margin-bottom: 10px;
 
@@ -17,8 +25,7 @@
 }
 
 .chartPreview {
-  max-height: 400px;
-  overflow: auto;
+  width: 100%;
 }
 
 .wordCount {
@@ -28,41 +35,4 @@
   font-size: 14px;
   justify-content: space-between;
   margin-top: 5px;
-}
-
-.withTooltip {
-  color: #d7700a;
-  cursor: pointer;
-  font-weight: bold;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.customTooltip {
-  > div:nth-of-type(2) {
-    strong {
-      color: #d7700a;
-      font-weight: bold;
-      margin-right: 5px;
-    }
-  }
-}
-
-.sampleObservationButton {
-  cursor: pointer;
-}
-
-.observationImage {
-  display: block;
-  width: 100%;
-}
-
-.sampleObservationDialog {
-  > div {
-    background: transparent;
-    box-shadow: none;
-    border: 0;
-    padding: 0;
-    position: relative;
-  }
 }

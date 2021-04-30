@@ -6,7 +6,6 @@ import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkCont
 import { HomeworkPreview } from "./components/HomeworkPreview/HomeworkPreview";
 import { calculateWordCount } from "./ToolUtils";
 import { HOMEWORK_SCREEN } from "./constants";
-import { ScreenInfo } from "./components/ScreenInfo/ScreenInfo";
 
 export const ToolHomework = ({
   isReadOnly,
@@ -19,8 +18,21 @@ export const ToolHomework = ({
   const [chartType, setChartType] = useState("ScatterChart");
   const [chartOptions, setChartOptions] = useState({});
   const [observations, setObservations] = useState("");
+  const [hasSavedWork, setHasSavedWork] = useState(
+    toolHomeworkData.chartOptions !== "{}" || toolHomeworkData.observations.length !== 0
+  )
 
   const tableData = JSON.parse(toolAssignmentData.tableData);
+  tableData.cols = tableData.cols.map(({ pattern, ...col }) => {
+    if (pattern === "General") {
+      return col
+    }
+
+    return {
+      ...col,
+      pattern
+    }
+  })
 
   useEffect(() => {
     if (isReadOnly) {
@@ -33,13 +45,24 @@ export const ToolHomework = ({
   }
 
   useEffect(() => {
-    typeof updateToolHomeworkData === "function" && updateToolHomeworkData({
-      chartType,
-      chartOptions: JSON.stringify(chartOptions),
-      observations
-    });
+    if (hasSavedWork) {
+      setChartOptions(JSON.parse(toolHomeworkData.chartOptions));
+      setChartType(toolHomeworkData.chartType);
+      setObservations(toolHomeworkData.observations);
+      setHasSavedWork(false);
+    }
+  }, [hasSavedWork, toolHomeworkData.chartOptions, toolHomeworkData.chartType, toolHomeworkData.observations]);
+
+  useEffect(() => {
+    if (!hasSavedWork && typeof updateToolHomeworkData === "function") {
+      updateToolHomeworkData({
+        chartType,
+        chartOptions: JSON.stringify(chartOptions),
+        observations
+      });
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartOptions, observations]);
+  }, [hasSavedWork, chartOptions, observations]);
 
   useEffect(() => {
     const wordCount = calculateWordCount(observations);
@@ -62,7 +85,6 @@ export const ToolHomework = ({
 
   return (
     <HomeworkContainter setScreen={setScreen} screen={screen}>
-      <ScreenInfo />
       {screen === HOMEWORK_SCREEN.intro && (
         <HomeworkIntro
           objective={toolAssignmentData.objective}

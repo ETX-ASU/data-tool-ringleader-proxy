@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useMemo} from 'react';
 import {API} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import {updateAssignment as updateAssignmentMutation} from '../../graphql/mutations';
@@ -9,6 +9,7 @@ import "./assignments.scss";
 import HeaderBar from "../../app/components/HeaderBar";
 import ToggleSwitch from "../../app/components/ToggleSwitch";
 import { ToolAssignment } from "../../tool/ToolAssignment";
+import { FullscreenOverlay } from "../../tool/components/FullscreenOverlay/FullscreenOverlay"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
 import ConfirmationModal from "../../app/components/ConfirmationModal";
@@ -23,6 +24,11 @@ function AssignmentEditor() {
   const [formData, setFormData] = useState(useSelector(state => state.app.assignment));
   const isLimitedEditing = useSelector(state => Boolean(state.app.homeworks?.length));
   const [activeModal, setActiveModal] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const canCreateAssignment = useMemo(() => {
+    return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
+  }, [formData.title, formData.toolAssignmentData.objective, formData.toolAssignmentData.tableData])
 
   async function handleCancelBtn() {
     if (!urlAssignmentId) {
@@ -34,7 +40,9 @@ function AssignmentEditor() {
 
   async function handleUpdateBtn() {
     // TODO: Bonus. Add mechanism to verify or perhaps create an undo mechanism, so maybe record previous state here before API call?
-    if (!formData.title) return;
+    if (!canCreateAssignment) return;
+
+    setIsSubmitting(true);
 
     const inputData = Object.assign({}, formData);
     delete inputData.createdAt;
@@ -57,6 +65,8 @@ function AssignmentEditor() {
       dispatch(setAssignmentData(formData));
       dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.viewAssignment));
     }
+
+    setIsSubmitting(false);
   }
 
 
@@ -83,7 +93,7 @@ function AssignmentEditor() {
     switch (activeModal.type) {
       case MODAL_TYPES.cancelDupedAssignmentEditsWarning:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Cancel Edits Warning'} buttons={[
+          <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Edits Warning'} buttons={[
             {name:'Cancel', onClick:returnToNewOrDupeAssignmentScreen},
             {name:'Continue Editing', onClick: () => setActiveModal(null)},
           ]}>
@@ -93,7 +103,7 @@ function AssignmentEditor() {
         )
       case MODAL_TYPES.cancelNewAssignmentEditsWarning:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Cancel Editing Assignment'} buttons={[
+          <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Editing Assignment'} buttons={[
             {name:'Cancel', onClick:returnToViewAssignmentScreen},
             {name:'Continue Creating', onClick: () => setActiveModal(null)},
           ]}>
@@ -172,6 +182,8 @@ function AssignmentEditor() {
           }
         </Container>
       </form>
+
+      {isSubmitting && <FullscreenOverlay />}
 
       <ToolAssignment
         isLimitedEditing={isLimitedEditing}

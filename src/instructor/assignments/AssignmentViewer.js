@@ -287,7 +287,7 @@ function AssignmentViewer(props) {
         }
 
         {reviewedStudentId && (students?.length > 0) &&
-          <HomeworkReview refreshGrades={fetchScores} assignment={assignment} students={students} reviewedStudentId={reviewedStudentId} />
+          <HomeworkReview isUseAutoScore={assignment.isUseAutoScore} refreshGrades={fetchScores} assignment={assignment} students={students} reviewedStudentId={reviewedStudentId} />
         }
       </Container>
     </Fragment>

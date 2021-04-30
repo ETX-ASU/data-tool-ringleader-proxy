@@ -3,7 +3,7 @@ import { calculateWordCount } from "../../ToolUtils";
 import styles from "./HomeworkObservation.module.scss";
 
 export const TextEditor = ({ value, setValue, minWordCount }) => {
-  const [wordCount, setWordCount] = useState(0)
+  const [wordCount, setWordCount] = useState(value.length > 0 ? calculateWordCount(value) : 0)
 
   const handleChange = useCallback((event) => {
     const text = event.target.value;
