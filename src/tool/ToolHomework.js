@@ -6,7 +6,6 @@ import { HomeworkContainter } from "./components/HomeworkContainter/HomeworkCont
 import { HomeworkPreview } from "./components/HomeworkPreview/HomeworkPreview";
 import { calculateWordCount } from "./ToolUtils";
 import { HOMEWORK_SCREEN } from "./constants";
-import { ScreenInfo } from "./components/ScreenInfo/ScreenInfo";
 
 export const ToolHomework = ({
   isReadOnly,
@@ -73,7 +72,6 @@ export const ToolHomework = ({
 
   return (
     <HomeworkContainter setScreen={setScreen} screen={screen}>
-      <ScreenInfo />
       {screen === HOMEWORK_SCREEN.intro && (
         <HomeworkIntro
           objective={toolAssignmentData.objective}
