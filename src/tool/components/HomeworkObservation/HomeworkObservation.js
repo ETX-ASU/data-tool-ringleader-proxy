@@ -10,6 +10,7 @@ export const HomeworkObservation = ({ objective, observations, chartType, setObs
       <Row>
         <Col className="col-7">
           <p>Take a look at your graph, displayed below.</p>
+          <p><strong>Note</strong>: Your chart may look different depending on the size of your screen.</p>
           <div className={styles.chartPreview}>
             <Chart
               chartType={chartType}

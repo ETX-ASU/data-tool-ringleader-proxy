@@ -99,6 +99,8 @@ export const HomeworkEditor = ({ data, chartType, chartOptions, setChartOptions,
       <div className="chart-info">
         Use the controls below to select the graph and manipulate it in order to accurately represent the task.
         You may click on the table button at any point to view the data.
+        <br /><br />
+        <strong>Note</strong>: Your chart may look different depending on the size of your screen.
       </div>
       <div className={isChartVisible ? styles.chartVisible : styles.chartInvisible}>
         <div className={styles.buttons}>
