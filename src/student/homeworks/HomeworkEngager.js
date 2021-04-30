@@ -1,8 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {ACTIVITY_PROGRESS, HOMEWORK_PROGRESS, MODAL_TYPES, UI_SCREEN_MODES} from "../../app/constants";
-import {Button} from 'react-bootstrap';
+import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {updateHomework as updateHomeworkMutation} from "../../graphql/mutations";
 import {API} from "aws-amplify";
 import {setActiveUiScreenMode} from "../../app/store/appReducer";
@@ -15,6 +15,7 @@ import ConfirmationModal from "../../app/components/ConfirmationModal";
 import { ToolHomework } from "../../tool/ToolHomework";
 import {sendAutoGradeToLMS} from "../../lmsConnection/RingLeader";
 import {calcAutoScore, calcMaxScoreForAssignment} from "../../tool/ToolUtils";
+import styles from "./HomeworkEngager.module.scss";
 
 library.add(faCheck, faTimes);
 
@@ -119,16 +120,28 @@ function HomeworkEngager(props) {
     }
   }
 
+  const handleSubmitButtonClick = useCallback(() => {
+    setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})
+  }, [])
+
 	return (
 		<Fragment>
       {activeModal && renderModal()}
       <HeaderBar title={assignment.title}>
-        <Button
-          disabled={!isSubmitEnabled}
-          onClick={() => setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})}
-        >
-          Submit
-        </Button>
+        {isSubmitEnabled ? (
+          <Button onClick={handleSubmitButtonClick}>Submit</Button>
+        ) : (
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="submit-button-tooltip">
+                You can't submit your work until you enter required number of words in the text area on the last page.
+              </Tooltip>
+            }
+          >
+            <Button className={styles.disabledButton} type="button">Submit</Button>
+          </OverlayTrigger>
+        )}
       </HeaderBar>
 
       <ToolHomework
