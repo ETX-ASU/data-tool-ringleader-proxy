@@ -360,3 +360,34 @@ label {
     max-width: 960px !important;
   }
 }
+
+.gutter {
+  background: rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  position: relative;
+
+  &:before, &:after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 50%;
+    border-left: 2px solid #aaa;
+    border-bottom: 2px solid #aaa;
+  }
+
+  &:before {
+    left: -5px;
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    left: 5px;
+    transform: rotate(225deg);
+  }
+}
+
+.gutter-horizontal {
+  cursor: ew-resize;
+}

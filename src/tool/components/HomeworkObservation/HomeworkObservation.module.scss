@@ -5,6 +5,14 @@
   }
 }
 
+.split {
+  display: flex;
+}
+
+.spliPane {
+  padding: 10px;
+}
+
 .info {
   margin-bottom: 10px;
 
@@ -17,8 +25,7 @@
 }
 
 .chartPreview {
-  max-height: 400px;
-  overflow: auto;
+  width: 100%;
 }
 
 .wordCount {
