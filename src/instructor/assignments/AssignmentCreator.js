@@ -14,6 +14,7 @@ import HeaderBar from "../../app/components/HeaderBar";
 import ToggleSwitch from "../../app/components/ToggleSwitch";
 
 import { ToolAssignment } from "../../tool/ToolAssignment";
+import { FullscreenOverlay } from "../../tool/components/FullscreenOverlay/FullscreenOverlay"
 import ConfirmationModal from "../../app/components/ConfirmationModal";
 import {reportError} from "../../developer/DevUtils";
 import {/*createAssignmentInLms,*/ handleConnectToLMS} from "../../lmsConnection/RingLeader";
@@ -47,9 +48,16 @@ function AssignmentCreator() {
 	const courseId = useSelector(state => state.app.courseId);
 	const [formData, setFormData] = useState(emptyAssignment);
   const [activeModal, setActiveModal] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const canCreateAssignment = useMemo(() => {
+    return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
+  }, [formData.title, formData.toolAssignmentData.objective, formData.toolAssignmentData.tableData])
 
   async function handleSubmitBtn() {
-    if (!formData.title) return;
+    if (!canCreateAssignment) return;
+
+    setIsSubmitting(true);
 
     const assignmentId = uuid();
     const inputData = Object.assign({}, formData, {
@@ -69,6 +77,7 @@ function AssignmentCreator() {
     } catch (error) {
       reportError(error, `We're sorry. There was a problem saving your new assignment.`);
     }
+    setIsSubmitting(false);
   }
 
   function toggleUseAutoScore(e) {
@@ -85,6 +94,7 @@ function AssignmentCreator() {
   }, [])
 
   function handleReturnToCreateOrDupe() {
+    setIsSubmitting(true);
     setActiveModal(null);
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.returnToLmsScreen))
   }
@@ -118,10 +128,6 @@ function AssignmentCreator() {
         return null;
     }
   }
-
-  const canCreateAssignment = useMemo(() => {
-    return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
-  }, [formData.title, formData.toolAssignmentData.objective, formData.toolAssignmentData.tableData])
 
 	return (
     <Fragment>
@@ -187,6 +193,8 @@ function AssignmentCreator() {
         }
         </Container>
       </form>
+
+      {isSubmitting && <FullscreenOverlay />}
 
       {/*The assignment data collected here is specific to the tool, while the above assignment data is used in every tool*/}
       <ToolAssignment
