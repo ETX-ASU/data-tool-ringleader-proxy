@@ -27,7 +27,6 @@ export const ToolAssignment = ({ isLimitedEditing, isUseAutoScore, toolAssignmen
   return (
     <Form>
       <AssignmentConfig
-        isUseAutoScore={isUseAutoScore}
         config={config}
         onUpdate={handleUpdateConfig}
         isReadOnly={isLimitedEditing}
