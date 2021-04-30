@@ -8,7 +8,7 @@ import { ToolHomework } from "../../tool/ToolHomework";
 
 
 function HomeworkReview(props) {
-  const {students, reviewedStudentId, assignment} = props;
+  const {students, reviewedStudentId, assignment, isUseAutoScore} = props;
 
   const [reviewedStudent, setReviewedStudent] = useState(students.find(s => s.id === reviewedStudentId));
   const isHideStudentIdentity = useSelector(state => state.app.isHideStudentIdentity);
@@ -47,7 +47,7 @@ function HomeworkReview(props) {
 	return (
 	  <Fragment>
       <Container className="homework-viewer">
-        <GradingBar refreshHandler={props.refreshGrades} assignment={assignment} reviewedStudent={reviewedStudent}/>
+        <GradingBar refreshHandler={props.refreshGrades} assignment={assignment} reviewedStudent={reviewedStudent} isUseAutoScore={isUseAutoScore} />
 
         <Row className='p-0'>
           <Col className='w-auto xt-large xtext-dark font-weight-bold xbg-light'>{getStudentRefName()}</Col>
