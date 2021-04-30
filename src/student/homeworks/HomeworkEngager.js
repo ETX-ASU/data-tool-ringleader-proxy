@@ -15,6 +15,7 @@ import ConfirmationModal from "../../app/components/ConfirmationModal";
 import { ToolHomework } from "../../tool/ToolHomework";
 import {sendAutoGradeToLMS} from "../../lmsConnection/RingLeader";
 import {calcAutoScore, calcMaxScoreForAssignment} from "../../tool/ToolUtils";
+import { FullscreenOverlay } from '../../tool/components/FullscreenOverlay/FullscreenOverlay';
 import styles from "./HomeworkEngager.module.scss";
 
 library.add(faCheck, faTimes);
@@ -31,10 +32,11 @@ function HomeworkEngager(props) {
 	const [toolHomeworkData, setToolHomeworkData] = useState(Object.assign({}, homework.toolHomeworkData));
   const [activeModal, setActiveModal] = useState(null);
   const [isSubmitEnabled, setSubmitEnabled] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 	async function submitHomeworkForReview() {
     setActiveModal(null);
+    setIsSubmitting(true);
 
     try {
       const inputData = Object.assign({}, homework, {
@@ -52,6 +54,8 @@ function HomeworkEngager(props) {
       delete inputData.comment;
 
       const result = await API.graphql({query: updateHomeworkMutation, variables: {input: inputData}});
+      setIsSubmitting(false);
+
       if (result) {
         if (assignment.isUseAutoSubmit) await calcAndSendScore(inputData);
         await setActiveModal({type: MODAL_TYPES.confirmHomeworkSubmitted})
@@ -83,6 +87,7 @@ function HomeworkEngager(props) {
   }
 
   async function closeModalAndReview() {
+    setIsSubmitting(true);
     setActiveModal(null);
     await props.refreshHandler();
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.reviewHomework));
@@ -100,7 +105,7 @@ function HomeworkEngager(props) {
     switch (activeModal.type) {
       case MODAL_TYPES.warningBeforeHomeworkSubmission:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Are you sure?'} buttons={[
+          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Are you sure?'} isStatic buttons={[
             {name:'Cancel', onClick: () => setActiveModal(null)},
             {name:'Submit', onClick:submitHomeworkForReview},
           ]}>
@@ -109,7 +114,7 @@ function HomeworkEngager(props) {
         )
       case MODAL_TYPES.confirmHomeworkSubmitted:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Submitted!'} buttons={[
+          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Submitted!'} isStatic buttons={[
             {name:'Review', onClick:closeModalAndReview},
           ]}>
             <p>You can now review your submitted assignment.</p>
@@ -143,6 +148,8 @@ function HomeworkEngager(props) {
           </OverlayTrigger>
         )}
       </HeaderBar>
+
+      {isSubmitting && <FullscreenOverlay />}
 
       <ToolHomework
         isReadOnly={false}
