@@ -30,7 +30,7 @@ export const HomeworkObservation = ({ objective, observations, chartType, setObs
           </div>
           <div className={styles.answer}>
             <TextEditor
-              value={observations}
+              value={observations || ""}
               setValue={setObservations}
               minWordCount={minWordCount}
             />
