@@ -48,6 +48,11 @@ export const DataSource = ({ isReadOnly, onUpdate, tableData }) => {
       {data && (
         <PreviewDataTable data={JSON.parse(data)} />
       )}
+      {isValidUrl === false && (
+        <div className={classNames(styles.errorMessage, "alert alert-danger")}>
+          Could not find valid data table at given url.
+        </div>
+      )}
       <Row className="ml-2">
         <Form.Group as={Col}>
           <Form.Label>Enter url to your Google Spreadsheet with the data source defined. Please make sure that anyone on the internet can view the spreadsheet!</Form.Label>
@@ -85,11 +90,6 @@ export const DataSource = ({ isReadOnly, onUpdate, tableData }) => {
               }
             ]}
           />
-        </div>
-      )}
-      {isValidUrl === false && (
-        <div className={classNames(styles.errorMessage, "alert alert-danger")}>
-          Could not find valid data table at given url.
         </div>
       )}
     </Container>
