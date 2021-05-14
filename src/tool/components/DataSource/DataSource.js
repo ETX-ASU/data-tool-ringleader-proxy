@@ -45,6 +45,9 @@ export const DataSource = ({ isReadOnly, onUpdate, tableData }) => {
   return (
     <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Data source url</h2>
+      {data && (
+        <PreviewDataTable data={JSON.parse(data)} />
+      )}
       <Row className="ml-2">
         <Form.Group as={Col}>
           <Form.Label>Enter url to your Google Spreadsheet with the data source defined. Please make sure that anyone on the internet can view the spreadsheet!</Form.Label>
@@ -60,9 +63,6 @@ export const DataSource = ({ isReadOnly, onUpdate, tableData }) => {
           />
         </Form.Group>
       </Row>
-      {data && (
-        <PreviewDataTable data={JSON.parse(data)} />
-      )}
       {isValidUrl && (
         <div className={styles.chartLoader}>
           <Chart

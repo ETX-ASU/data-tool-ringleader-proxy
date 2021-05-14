@@ -15,6 +15,8 @@ export const PreviewDataTable = ({ data }) => {
       <div className={classNames(styles.dataTablePreview, "alert alert-success")}>
         Data loaded successfully.
         <button type="button" onClick={handleShow}>Click here to preview data table</button>
+        <br />
+        You can change your data source URL until a student begins.
       </div>
       <Modal show={isVisible} onHide={handleHide} centered>
         <Modal.Header closeButton>
