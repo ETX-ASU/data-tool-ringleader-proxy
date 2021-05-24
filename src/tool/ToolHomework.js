@@ -22,7 +22,11 @@ export const ToolHomework = ({
     toolHomeworkData.chartOptions !== "{}" || toolHomeworkData.observations.length !== 0
   )
 
-  const tableData = JSON.parse(toolAssignmentData.tableData);
+  const dataSet = toolHomeworkData.dataSet;
+
+  const tableData = dataSet === 0
+    ? JSON.parse(toolAssignmentData.tableData)
+    : JSON.parse(toolAssignmentData[`tableData${dataSet}`]);
   tableData.cols = tableData.cols.map(({ pattern, ...col }) => {
     if (pattern === "General") {
       return col
@@ -58,7 +62,8 @@ export const ToolHomework = ({
       updateToolHomeworkData({
         chartType,
         chartOptions: JSON.stringify(chartOptions),
-        observations
+        observations,
+        dataSet
       });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

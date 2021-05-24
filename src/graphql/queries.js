@@ -85,6 +85,7 @@ export const getHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
@@ -109,6 +110,7 @@ export const listHomeworks = /* GraphQL */ `
           chartType
           chartOptions
           observations
+          dataSet
         }
         createdAt
         updatedAt

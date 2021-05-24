@@ -11,7 +11,7 @@ import {setActiveUiScreenMode} from "../app/store/appReducer";
 import HomeworkViewer from "./homeworks/HomeworkViewer";
 import HomeworkEngager from "./homeworks/HomeworkEngager";
 import {fetchGradeForStudent, hasValidSession} from "../lmsConnection/RingLeader";
-import {getHomeworkStatus} from "../tool/ToolUtils";
+import {getHomeworkStatus, getRandomDataSet} from "../tool/ToolUtils";
 import LoadingIndicator from "../app/components/LoadingIndicator";
 import aws_exports from '../aws-exports';
 import moment from "moment";
@@ -48,9 +48,11 @@ function StudentDashboard() {
           studentOwnerId: activeUser.id,
           assignmentId: assignment.id,
           toolHomeworkData: {
-						...EMPTY_TOOL_HOMEWORK_DATA
-					}
+						...EMPTY_TOOL_HOMEWORK_DATA,
+						dataSet: getRandomDataSet(assignment.toolAssignmentData)
+					},
 			  });
+
         const resultHomework = await API.graphql({query: createHomework, variables: {input: freshHomework}});
         console.warn("Successful in creating homework for this student");
 

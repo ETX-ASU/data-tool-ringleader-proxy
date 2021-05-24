@@ -1,96 +1,30 @@
-import React, { useEffect, useState } from "react";
-import classNames from "clsx";
-import { Chart } from "react-google-charts";
-import { Container, Col, Form, Row } from "react-bootstrap";
-import { checkIfUrlIsValid } from "./utils";
-import { PreviewDataTable } from "./PreviewDataTable";
-import styles from "./DataSource.module.scss";
+import React, { useCallback } from "react";
+import { Container } from "react-bootstrap";
+import { SingleDataSource } from "./SingleDataSource";
 
-export const DataSource = ({ isReadOnly, onUpdate, tableData }) => {
-  const [dataSourceUrl, setDataSourceUrl] = useState("");
-  const [isValidUrl, setIsValidUrl] = useState(null);
-  const [data, setData] = useState(null);
+export const DataSource = ({ isReadOnly, onUpdate, tableData, tableData1, tableData2, tableData3, tableData4 }) => {
 
-  useEffect(() => {
-    const checkUrl = async (url) => {
-      if (url === "") {
-        setIsValidUrl(null)
-        setData(null)
-      } else {
-        const isValid = await checkIfUrlIsValid(url)
-        setIsValidUrl(isValid)
-
-        if (!isValid) {
-          setData(null)
-        }
-      }
-    }
-
-    checkUrl(dataSourceUrl)
-  }, [dataSourceUrl])
-
-  useEffect(() => {
-    if (tableData !== null) {
-      setData(tableData)
-    }
-  }, [tableData])
-
-  useEffect(() => {
-    if (isValidUrl && data) {
-      onUpdate("tableData", data)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isValidUrl])
+  const handleUpdate = useCallback((fieldName, data) => {
+    window.scrollTo(0,document.body.scrollHeight);
+    onUpdate(fieldName, data)
+  }, [onUpdate])
 
   return (
     <Container className="ml-2 mr-2">
-      <h2 className="ml-2 mb-2">Data source url</h2>
-      {data && (
-        <PreviewDataTable data={JSON.parse(data)} />
+      <h2 className="ml-2 mb-2">Data source urls</h2>
+      <h4 className="ml-2 mb-2">You can add up to 5 data sets. The next fields will be revealed when you fill in the visible fields.</h4>
+      <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData" onUpdate={handleUpdate} initialData={tableData} title="First data source" />
+      {tableData !== null && (
+        <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData1" onUpdate={handleUpdate} initialData={tableData1} title="Second data source" />
       )}
-      {isValidUrl === false && (
-        <div className={classNames(styles.errorMessage, "alert alert-danger")}>
-          Could not find valid data table at given url.
-        </div>
+      {tableData1 !== null && (
+        <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData2" onUpdate={handleUpdate} initialData={tableData2} title="Third data source" />
       )}
-      <Row className="ml-2">
-        <Form.Group as={Col}>
-          <Form.Label>Enter url to your Google Spreadsheet with the data source defined. Please make sure that anyone on the internet can view the spreadsheet!</Form.Label>
-          <Form.Control
-            className={classNames(
-              isValidUrl === true && styles.validUrl,
-              isValidUrl === false && styles.invalidUrl
-            )}
-            disabled={isReadOnly}
-            type="text"
-            value={dataSourceUrl}
-            onChange={(event) => setDataSourceUrl(event.target.value)}
-          />
-        </Form.Group>
-      </Row>
-      {isValidUrl && (
-        <div className={styles.chartLoader}>
-          <Chart
-            chartType="BarChart"
-            spreadSheetUrl={dataSourceUrl}
-            chartEvents={[
-              {
-                eventName: "error",
-                callback: () => {
-                  setData(null);
-                  setIsValidUrl(false);
-                }
-              },
-              {
-                eventName: "ready",
-                callback: ({ chartWrapper }) => {
-                  const chartData = chartWrapper.getDataTable();
-                  setData(chartData.toJSON());
-                }
-              }
-            ]}
-          />
-        </div>
+      {tableData2 !== null && (
+        <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData3" onUpdate={handleUpdate} initialData={tableData3} title="Fourth data source" />
+      )}
+      {tableData3 !== null && (
+        <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData4" onUpdate={handleUpdate} initialData={tableData4} title="Last data source" />
       )}
     </Container>
   )

@@ -25,19 +25,12 @@ export const ToolAssignment = ({ isLimitedEditing, isUseAutoScore, toolAssignmen
   const handleUpdateTableData = useCallback((field, value) => {
     const newConfig = {
       ...config,
-      tableData: value,
-      // TODO: testing
-      tableData1: value,
-      tableData2: value,
-      tableData3: value,
-      tableData4: value
+      [field]: value,
     };
 
     setConfig(newConfig)
     updateToolAssignmentData(newConfig)
   }, [config, updateToolAssignmentData]);
-
-  const tableData = toolAssignmentData?.tableData ||  null;
 
   return (
     <Form>
@@ -54,7 +47,11 @@ export const ToolAssignment = ({ isLimitedEditing, isUseAutoScore, toolAssignmen
       <DataSource
         isReadOnly={isLimitedEditing}
         onUpdate={handleUpdateTableData}
-        tableData={tableData}
+        tableData={toolAssignmentData?.tableData ||  null}
+        tableData1={toolAssignmentData?.tableData1 ||  null}
+        tableData2={toolAssignmentData?.tableData2 ||  null}
+        tableData3={toolAssignmentData?.tableData3 ||  null}
+        tableData4={toolAssignmentData?.tableData4 ||  null}
       />
     </Form>
   )
