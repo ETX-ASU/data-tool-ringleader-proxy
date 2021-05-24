@@ -32,12 +32,6 @@ export const ToolAssignment = ({ isLimitedEditing, isUseAutoScore, toolAssignmen
     updateToolAssignmentData(newConfig)
   }, [config, updateToolAssignmentData]);
 
-  const tableData = toolAssignmentData?.tableData ||  null;
-  const tableData1 = toolAssignmentData?.tableData1 ||  null;
-  const tableData2 = toolAssignmentData?.tableData2 ||  null;
-  const tableData3 = toolAssignmentData?.tableData3 ||  null;
-  const tableData4 = toolAssignmentData?.tableData4 ||  null;
-
   return (
     <Form>
       <AssignmentConfig
@@ -53,11 +47,11 @@ export const ToolAssignment = ({ isLimitedEditing, isUseAutoScore, toolAssignmen
       <DataSource
         isReadOnly={isLimitedEditing}
         onUpdate={handleUpdateTableData}
-        tableData={tableData}
-        tableData1={tableData1}
-        tableData2={tableData2}
-        tableData3={tableData3}
-        tableData4={tableData4}
+        tableData={toolAssignmentData?.tableData ||  null}
+        tableData1={toolAssignmentData?.tableData1 ||  null}
+        tableData2={toolAssignmentData?.tableData2 ||  null}
+        tableData3={toolAssignmentData?.tableData3 ||  null}
+        tableData4={toolAssignmentData?.tableData4 ||  null}
       />
     </Form>
   )

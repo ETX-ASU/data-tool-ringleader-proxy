@@ -7,7 +7,7 @@ import { checkIfUrlIsValid } from "./utils";
 import styles from "./DataSource.module.scss";
 
 export const SingleDataSource = ({ isReadOnly, fieldName, onUpdate, initialData, title }) => {
-  const [dataSourceUrl, setDataSourceUrl] = useState("");
+  const [dataSourceUrl, setDataSourceUrl] = useState(null);
   const [isValidUrl, setIsValidUrl] = useState(null);
   const [data, setData] = useState(null);
 
@@ -32,7 +32,7 @@ export const SingleDataSource = ({ isReadOnly, fieldName, onUpdate, initialData,
       }
     }
 
-    checkUrl(dataSourceUrl)
+    dataSourceUrl !== null && checkUrl(dataSourceUrl);
   }, [dataSourceUrl])
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export const SingleDataSource = ({ isReadOnly, fieldName, onUpdate, initialData,
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isValidUrl])
+
 
   return (
     <div className={styles.singleDataSource}>
@@ -63,7 +64,7 @@ export const SingleDataSource = ({ isReadOnly, fieldName, onUpdate, initialData,
             )}
             disabled={isReadOnly}
             type="text"
-            value={dataSourceUrl}
+            value={dataSourceUrl || ""}
             onChange={(event) => setDataSourceUrl(event.target.value)}
           />
         </Form.Group>
