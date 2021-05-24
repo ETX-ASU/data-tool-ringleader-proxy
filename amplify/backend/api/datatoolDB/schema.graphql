@@ -45,4 +45,5 @@ type ToolHomeworkData {
   chartType: String
   chartOptions: String
   observations: String
+  dataSet: Int
 }

@@ -106,6 +106,7 @@ export const onCreateHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
@@ -125,6 +126,7 @@ export const onUpdateHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
@@ -144,6 +146,7 @@ export const onDeleteHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
