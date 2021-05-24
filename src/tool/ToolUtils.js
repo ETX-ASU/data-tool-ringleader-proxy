@@ -43,3 +43,23 @@ export const calculateWordCount = (text) => {
     .filter(token => token)
     .length;
 }
+
+export const getRandomDataSet = (assignmentData) => {
+  const dataSets = [];
+  const prefix = "tableData";
+
+  Object.keys(assignmentData).forEach(key => {
+    if (key.startsWith(prefix) && (assignmentData[key] || "").length > 0) {
+      dataSets.push(key)
+    }
+  })
+
+  const randomDataSet = dataSets[Math.floor(Math.random() * dataSets.length)];
+  const dataSetNumber = randomDataSet.replace(prefix, "");
+
+  if (dataSetNumber === "") {
+    return 0;
+  }
+
+  return parseInt(dataSetNumber);
+}

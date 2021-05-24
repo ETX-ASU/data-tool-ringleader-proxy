@@ -35,10 +35,15 @@ type ToolAssignmentData {
   minWordCount: Int
   maxScore: Int
   tableData: String
+  tableData1: String
+  tableData2: String
+  tableData3: String
+  tableData4: String
 }
 
 type ToolHomeworkData {
   chartType: String
   chartOptions: String
   observations: String
+  dataSet: Int
 }

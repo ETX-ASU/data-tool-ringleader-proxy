@@ -23,6 +23,10 @@ export const onCreateAssignment = /* GraphQL */ `
         minWordCount
         maxScore
         tableData
+        tableData1
+        tableData2
+        tableData3
+        tableData4
       }
       createdAt
       updatedAt
@@ -79,6 +83,10 @@ export const onDeleteAssignment = /* GraphQL */ `
         minWordCount
         maxScore
         tableData
+        tableData1
+        tableData2
+        tableData3
+        tableData4
       }
       createdAt
       updatedAt
@@ -98,6 +106,7 @@ export const onCreateHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
@@ -117,6 +126,7 @@ export const onUpdateHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
@@ -136,6 +146,7 @@ export const onDeleteHomework = /* GraphQL */ `
         chartType
         chartOptions
         observations
+        dataSet
       }
       createdAt
       updatedAt
