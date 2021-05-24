@@ -183,6 +183,7 @@ button {
     &:not(:disabled) {
       box-shadow: none;
       background-color: var(--x-black) !important;
+      color: white !important;
     }
   }
 
