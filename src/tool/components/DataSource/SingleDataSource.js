@@ -56,7 +56,7 @@ export const SingleDataSource = ({ isReadOnly, fieldName, onUpdate, initialData,
       <Row className="ml-2">
         <Form.Group as={Col}>
           <h4>{title}</h4>
-          <Form.Label>Enter url to your Google Spreadsheet with the data source defined. Please make sure that anyone on the internet can view the spreadsheet!</Form.Label>
+          <Form.Label>Enter url to your Google Spreadsheet. Please make sure that anyone on the internet can view the spreadsheet!</Form.Label>
           <Form.Control
             className={classNames(
               isValidUrl === true && styles.validUrl,

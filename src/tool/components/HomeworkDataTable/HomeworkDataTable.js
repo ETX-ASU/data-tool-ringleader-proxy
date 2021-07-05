@@ -20,7 +20,7 @@ export const HomeworkDataTable = ({ data }) => {
       </Button>
       <Modal show={isVisible} onHide={handleHide} centered className={styles.tablePreviewDialog}>
         <Modal.Header closeButton>
-          <Modal.Title>Data table preview</Modal.Title>
+          <Modal.Title>Data table</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className={styles.wrapper}>

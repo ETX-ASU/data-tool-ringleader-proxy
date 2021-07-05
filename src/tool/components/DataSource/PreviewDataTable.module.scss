@@ -1,16 +1,15 @@
 .dataTablePreview {
   margin-left: 1.25rem;
 
-  > button {
-    background: transparent !important;
-    border: 0 !important;
-    color: #0b2e13 !important;
+  > span {
+    cursor: pointer;
+    color: #0b2e13;
     font-weight: bold;
-    outline: none !important;
+    margin-left: 10px;
+    outline: none;
 
     &:hover {
-      background: transparent !important;
-      color: #0b2e13 !important;
+      color: #000;
     }
   }
 }
