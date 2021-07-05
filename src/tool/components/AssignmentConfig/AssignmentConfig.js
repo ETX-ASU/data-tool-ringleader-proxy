@@ -1,14 +1,15 @@
 import React from "react";
 import { Container, Col, Form, Row } from "react-bootstrap";
 import { MAX_SCORE, MIN_WORD_COUNT } from "../../constants";
+import styles from "./AssignmentConfig.module.scss";
 
 export const AssignmentConfig = ({ isReadOnly, config, onUpdate }) => {
   return (
     <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Assignment configuration</h2>
-      <Row className="ml-2">
+      <Row className={styles.row}>
         <Form.Group as={Col}>
-          <Form.Label>Required minimum word count in the answer</Form.Label>
+          <Form.Label>Required minimum word count in objective justification response.</Form.Label>
           <Form.Control
             disabled={isReadOnly}
             type="number"
