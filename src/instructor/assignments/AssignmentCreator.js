@@ -141,7 +141,7 @@ function AssignmentCreator() {
             placement="bottom"
             overlay={
               <Tooltip id="submit-button-tooltip">
-                Please enter the assignment title, objective and data source url.
+                Please enter the assignment title, objective and/or data source url.
               </Tooltip>
             }
           >
