@@ -12,7 +12,8 @@ export const DataSource = ({ isReadOnly, onUpdate, tableData, tableData1, tableD
   return (
     <Container className="ml-2 mr-2">
       <h2 className="ml-2 mb-2">Data source urls</h2>
-      <h4 className="ml-2 mb-2">You can add up to 5 data sets. The next fields will be revealed when you fill in the visible fields.</h4>
+      <h4 className="ml-2 mb-2">You can add up to 5 data sets. Data sets will be randomly assigned to the students.
+      <br />The next fields will be revealed when you fill in the visible fields.</h4>
       <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData" onUpdate={handleUpdate} initialData={tableData} title="First data source" />
       {tableData !== null && (
         <SingleDataSource isReadOnly={isReadOnly} fieldName="tableData1" onUpdate={handleUpdate} initialData={tableData1} title="Second data source" />
