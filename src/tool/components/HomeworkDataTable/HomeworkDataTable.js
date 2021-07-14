@@ -12,7 +12,7 @@ export const HomeworkDataTable = ({ data }) => {
   return (
     <>
       <Button
-        variant="outline-success"
+        variant="secondary"
         size="sm"
         onClick={handleShow}
       >

@@ -11,6 +11,10 @@
 
 .spliPane {
   padding: 10px;
+
+  &:nth-child(2) {
+    background-color: #d6d6d6;
+  }
 }
 
 .info {

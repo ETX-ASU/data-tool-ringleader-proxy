@@ -9,7 +9,7 @@ function HomeworkViewer(props) {
 
 	return (
 		<Fragment>
-      <HeaderBar title={assignment.title} />
+      <HeaderBar title={assignment.title} smallTitle />
 
       <ToolHomework
         isReadOnly

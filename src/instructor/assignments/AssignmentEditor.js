@@ -94,7 +94,7 @@ function AssignmentEditor() {
       case MODAL_TYPES.cancelDupedAssignmentEditsWarning:
         return (
           <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Edits Warning'} buttons={[
-            {name:'Cancel', onClick:returnToNewOrDupeAssignmentScreen},
+            {name:'Cancel', variant:"secondary", onClick:returnToNewOrDupeAssignmentScreen},
             {name:'Continue Editing', onClick: () => setActiveModal(null)},
           ]}>
             <p>Do you want to cancel editing this duplicated assignment or continue?</p>

@@ -12,7 +12,11 @@ library.add(faChevronLeft);
 
 function HeaderBar(props) {
 	return (
-    <Row className={classNames(styles.header, props.withLogo && styles.withLogo)}>
+    <Row className={classNames(
+      styles.header,
+      props.withLogo && styles.withLogo, 
+      props.smallTitle && styles.smallTitle
+    )}>
       <Col className={'col-7'}>
         <h1>
           {props.onBackClick &&
