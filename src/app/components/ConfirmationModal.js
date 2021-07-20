@@ -13,7 +13,9 @@ function ConfirmationModal({ isStatic, ...props }) {
       </Modal.Body>
       <Modal.Footer>
         {props.buttons.map((b, i) =>
-          <Button key={i} onClick={b.onClick}>{b.name}</Button>
+          <Button key={i} onClick={b.onClick} variant={b.variant || "primary"}>
+            {b.name}
+          </Button>
         )}
       </Modal.Footer>
     </Modal>

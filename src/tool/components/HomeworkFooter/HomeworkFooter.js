@@ -30,7 +30,7 @@ export const HomeworkFooter = ({ screen, setScreen, canShowNavButtons }) => {
         {screen !== HOMEWORK_SCREEN.intro && (
           <Button
             type="button"
-            className="btn btn-secondary"
+            variant="dark"
             onClick={handlePrevPageClick}
           >
             <FontAwesomeIcon icon={faChevronLeft} />
@@ -41,8 +41,8 @@ export const HomeworkFooter = ({ screen, setScreen, canShowNavButtons }) => {
       <div>
         {screen !== HOMEWORK_SCREEN.observation && (
           <Button
+            variant="dark"
             type="button"
-            className="btn btn-secondary"
             onClick={handleNextPageClick}
           >
             <span>Next</span>

@@ -84,7 +84,6 @@
 
 
 body {
-  font-family: 'Open Sans', sans-serif;
   background-color: var(--x-dark-gray) !important;
   height: 100%;
   margin: 0;
@@ -92,25 +91,7 @@ body {
 
 .main-content-row {
   min-height: calc(100vh - 80px - 3rem);
-  font-family: 'Open Sans', sans-serif;
 }
-//
-//.box-shadow {
-//  border: 1px solid #DFDFDF;
-//  border-radius: 6px;
-//  box-shadow: 0 6px 22px 0 rgba(0, 0, 0, 0.1);
-//}
-//
-//.input-bar {
-//  display: grid;
-//  grid-template-columns: 3fr 4fr;
-//  padding: 5px 0 20px 0;
-//}
-//
-//.input-bar.hidden {
-//  visibility: hidden;
-//}
-
 
 .options-list input {
   width: calc(100% - 60px);
