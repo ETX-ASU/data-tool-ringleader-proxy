@@ -133,7 +133,7 @@ button {
 
   &.btn-primary {
     border: none !important;
-    background-color: #de322b;
+    background-color: #DE312B;
 
     &:hover {
       &:not(:disabled) {
@@ -161,15 +161,15 @@ button {
 
   &.btn-secondary {
     background-color: #fff !important;
-    border: 1px solid #de322b;
-    color: #de322b !important;
+    border: 1px solid #DE312B;
+    color: #DE312B !important;
 
     &:hover, &:active, &:focus {
       &:not(:disabled) {
         box-shadow: none;
         background-color: #fceae9 !important;
         border-color: #ee8986 !important;
-        color: #de322b !important;
+        color: #DE312B !important;
       }
     }
   }
@@ -352,7 +352,7 @@ label {
 }
 
 .modal-header {
-  background-color: #00283f;
+  background-color: #032D46;
 }
 
 .modal-title {
