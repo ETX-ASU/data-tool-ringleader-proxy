@@ -57,15 +57,15 @@ function HomeworkReview(props) {
         <Row className='mt-5 mb-5 p-0'>
           <Col className='p-0'>
             <label>Student:</label>
-            <p className='summary-data xt-med ml-3 mb-2'>{getStudentRefName()}</p>
+            <p>{getStudentRefName()}</p>
           </Col>
           <Col className='no-gutters'>
             <label>Email:</label>
-            <p className='summary-data xt-med ml-3 mb-2'>{reviewedStudent.email}</p>
+            <p>{reviewedStudent.email}</p>
           </Col>
           <Col className='no-gutters'>
             <label>Progress:</label>
-            <p className='summary-data xt-med ml-3 mb-2'>{reviewedStudent.homeworkStatus}</p>
+            <p>{reviewedStudent.homeworkStatus}</p>
           </Col>
         </Row>
         }

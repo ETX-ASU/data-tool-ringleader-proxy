@@ -94,7 +94,7 @@ function AssignmentEditor() {
       case MODAL_TYPES.cancelDupedAssignmentEditsWarning:
         return (
           <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Edits Warning'} buttons={[
-            {name:'Cancel', onClick:returnToNewOrDupeAssignmentScreen},
+            {name:'Cancel', variant:"secondary", onClick:returnToNewOrDupeAssignmentScreen},
             {name:'Continue Editing', onClick: () => setActiveModal(null)},
           ]}>
             <p>Do you want to cancel editing this duplicated assignment or continue?</p>
@@ -104,7 +104,7 @@ function AssignmentEditor() {
       case MODAL_TYPES.cancelNewAssignmentEditsWarning:
         return (
           <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Editing Assignment'} buttons={[
-            {name:'Cancel', onClick:returnToViewAssignmentScreen},
+            {name:'Cancel', variant:"secondary", onClick:returnToViewAssignmentScreen},
             {name:'Continue Creating', onClick: () => setActiveModal(null)},
           ]}>
             <p>Do you want to cancel editing this assignment or continue?</p>
@@ -120,7 +120,7 @@ function AssignmentEditor() {
     <Fragment>
       {activeModal && renderModal()}
       <HeaderBar title={`Edit: ${formData.title}`} >
-        <Button onClick={handleCancelBtn} className='mr-2'>Cancel</Button>
+        <Button variant="secondary" onClick={handleCancelBtn} className='mr-2'>Cancel</Button>
         <Button onClick={handleUpdateBtn}>Update</Button>
       </HeaderBar>
       {isLimitedEditing &&

@@ -140,7 +140,7 @@ function HomeworkEngager(props) {
       case MODAL_TYPES.warningBeforeHomeworkSubmission:
         return (
           <ConfirmationModal onHide={() => setActiveModal(null)} title={'Are you sure?'} isStatic buttons={[
-            {name:'Cancel', onClick: () => setActiveModal(null)},
+            {name:'Cancel', variant:"secondary", onClick: () => setActiveModal(null)},
             {name:'Submit', onClick:submitHomeworkForReview},
           ]}>
             <p>Once submitted, you cannot go back to make additional edits to your assignment.</p>
@@ -176,7 +176,7 @@ function HomeworkEngager(props) {
 	return (
 		<Fragment>
       {activeModal && renderModal()}
-      <HeaderBar title={assignment.title}>
+      <HeaderBar title={assignment.title} smallTitle>
         <Button onClick={handleSaveButtonClick}>Save</Button>
         &nbsp;
         {isSubmitEnabled ? (

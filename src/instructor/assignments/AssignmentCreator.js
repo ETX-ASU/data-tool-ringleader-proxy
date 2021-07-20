@@ -108,8 +108,8 @@ function AssignmentCreator() {
     switch (activeModal.type) {
       case MODAL_TYPES.cancelNewAssignmentEditsWarning:
         return (
-          <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title={'Cancel Creation Warning'} buttons={[
-            {name: 'Cancel', onClick: handleCancelCreatingAssignment},
+          <ConfirmationModal isStatic onHide={() => setActiveModal(null)} title="Cancel New Assignment" buttons={[
+            {name: 'Cancel new assignment', variant: "secondary", onClick: handleCancelCreatingAssignment},
             {name: 'Continue Creating', onClick: () => setActiveModal(null)},
           ]}>
             <p>Do you want to cancel new assignment or continue editing?</p>
@@ -118,7 +118,7 @@ function AssignmentCreator() {
         );
       case MODAL_TYPES.confirmAssignmentSaved:
         return (
-          <ConfirmationModal isStatic  onHide={() => setActiveModal(null)} title={'Assignment Saved'} buttons={[
+          <ConfirmationModal isStatic  onHide={() => setActiveModal(null)} title="Assignment Saved" buttons={[
             {name: 'Continue', onClick: handleReturnToCreateOrDupe},
           ]}>
             <p>Assignment has been saved! In order to access it, use this assignmentId: ${activeModal.id}</p>
@@ -132,8 +132,8 @@ function AssignmentCreator() {
 	return (
     <Fragment>
       {activeModal && renderModal()}
-      <HeaderBar title='Create New Assignment'>
-        <Button onClick={() => setActiveModal({type: MODAL_TYPES.cancelNewAssignmentEditsWarning})} className='mr-2'>Cancel</Button>
+      <HeaderBar withLogo title='Create New Assignment'>
+        <Button variant="secondary" onClick={() => setActiveModal({type: MODAL_TYPES.cancelNewAssignmentEditsWarning})} className='mr-2'>Cancel</Button>
         {canCreateAssignment ? (
           <Button onClick={handleSubmitBtn}>Create</Button>
         ) : (

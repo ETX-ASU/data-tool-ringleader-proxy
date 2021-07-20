@@ -1,4 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
+import classNames from 'clsx';
 import {Button, Col, DropdownButton, Row, Dropdown} from "react-bootstrap";
 import LoadingIndicator from "../../app/components/LoadingIndicator";
 import HomeworkListItem from "./HomeworkListItem";
@@ -16,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {setDisplayOrder} from "../../app/store/appReducer";
+import styles from "./HomeworkListing.module.scss";
 
 
 function HomeworkListing(props) {
@@ -144,29 +146,35 @@ function HomeworkListing(props) {
 
   return (
     <Fragment>
-      <Row className='pt-2 pb-4'>
+      <Row className={styles.pagination}>
         <Col className='col-9'>
           {pageCount > 5 &&
-          <Button className='page-nav-btn mr-1 xbg-dark text-white' onClick={() => setCurPageNum(Math.max(curPageNum-5, 0))}>
+          <Button variant="dark" onClick={() => setCurPageNum(Math.max(curPageNum-5, 0))}>
             <FontAwesomeIcon icon={faBackward}/>
           </Button>}
-          <Button className='page-nav-btn mr-1 xbg-dark text-white' onClick={() => setCurPageNum(Math.max(curPageNum-1, 0))}>
+          <Button variant="dark" onClick={() => setCurPageNum(Math.max(curPageNum-1, 0))}>
             <FontAwesomeIcon icon={faCaretLeft}/>
           </Button>
           {pageBtns.map((b, i) => (
-            <Button className={`page-btn mr-1 ${curPageNum === b ? 'selected' : ''}`} key={i} onClick={() => setCurPageNum(b)}>{b+1}</Button>
+            <Button 
+              variant="light"
+              className={classNames(
+                styles.pageButton,
+                curPageNum === b && styles.selected
+              )}
+              key={i} onClick={() => setCurPageNum(b)}>{b+1}</Button>
           ))}
-          <Button className='page-nav-btn mr-1 xbg-dark text-white' onClick={() => setCurPageNum(Math.min(curPageNum+1, pageCount-1))}>
+          <Button variant="dark" onClick={() => setCurPageNum(Math.min(curPageNum+1, pageCount-1))}>
             <FontAwesomeIcon icon={faCaretRight}/>
           </Button>
           {pageCount > 5 &&
-          <Button className='page-nav-btn mr-1 xbg-dark text-white' onClick={() => setCurPageNum(Math.min(curPageNum+5, pageCount-1))}>
+          <Button variant="dark" onClick={() => setCurPageNum(Math.min(curPageNum+5, pageCount-1))}>
             <FontAwesomeIcon icon={faForward}/>
           </Button>}
         </Col>
         <Col className='text-right mr-2'>
-          <span>Per page
-            <DropdownButton className='d-inline-block ml-2' title={studentsPerPage} onSelect={handleStudentsPerPageSelected}>
+          <span className={styles.dropdownButton}>Per page
+            <DropdownButton title={studentsPerPage} onSelect={handleStudentsPerPageSelected}>
               <Dropdown.Item eventKey={10}>10</Dropdown.Item>
               <Dropdown.Item eventKey={15}>15</Dropdown.Item>
               <Dropdown.Item eventKey={20}>20</Dropdown.Item>
@@ -194,7 +202,7 @@ function HomeworkListing(props) {
                 </th>
                 {props.isUseAutoScore &&
                 <th scope="col" className={`pb-1 pt-2 mini-col text-center ${sortBy.type === SORT_BY.autoScore ? 'sort-col' : ''}`}>
-                  <span onClick={() => toggleSortOn(SORT_BY.autoScore)}>Auto
+                  <span onClick={() => toggleSortOn(SORT_BY.autoScore)}>Autoscore
                   </span>
                 </th>
                 }

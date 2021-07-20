@@ -9,7 +9,7 @@ import {
   setCurrentlyReviewedStudentId,
   toggleHideStudentIdentity
 } from "../../app/store/appReducer";
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Container} from 'react-bootstrap';
 import {API, graphqlOperation} from "aws-amplify";
 import {listHomeworks} from "../../graphql/queries";
 import HomeworkReview from "./HomeworkReview";
@@ -29,6 +29,8 @@ import {
   getNewToolHomeworkDataForAssignment
 } from "../../tool/ToolUtils";
 import {reportError} from "../../developer/DevUtils";
+import styles from "./AssignmentViewer.module.scss";
+
 library.add(faEdit, faPen, faChevronLeft);
 
 
@@ -196,7 +198,7 @@ function AssignmentViewer(props) {
       case MODAL_TYPES.showBatchSubmitOptions:
         return (
           <ConfirmationModal onHide={() => setActiveModal(null)} title={'Batch Submit'} buttons={[
-            {name: 'Cancel', onClick: () => setActiveModal(null)},
+            {name: 'Cancel', variant: "secondary", onClick: () => setActiveModal(null)},
             {name: 'Submit', onClick: (e) => handleBatchSubmit(e)},
           ]}>
             <p>Submit auto-scores for...</p>
@@ -241,9 +243,9 @@ function AssignmentViewer(props) {
           </Button>
         </HeaderBar> :
         <HeaderBar onBackClick={() => dispatch(setCurrentlyReviewedStudentId(''))} title={assignment?.title}>
-          <span className='mr-2'>
+          <span className={styles.headerCheckbox}>
             <input type={'checkbox'} onChange={toggleHideAndRandomize} checked={isHideStudentIdentity}/>
-            Hide identity & randomize
+            Hide identity &amp; randomize
           </span>
         </HeaderBar>
       }
@@ -256,32 +258,32 @@ function AssignmentViewer(props) {
         }
         {!reviewedStudentId &&
         <Fragment>
-          <Row className='mt-2 mb-2 pt-2 pb-2'>
-            <Col className='col-6'>
+          <div className={styles.viewerHeader}>
+            <div className={styles.batchSubmit}>
               <Button onClick={() => setActiveModal({type:MODAL_TYPES.showBatchSubmitOptions})}>
                 <FontAwesomeIcon className='btn-icon' icon={faPen} />Batch Submit
               </Button>
-            </Col>
-            <Col className='text-right'>
-              <span className='mr-2'>
-                <input className='mr-2' type={'checkbox'} onChange={toggleHideAndRandomize} checked={isHideStudentIdentity}/>
-                Hide identity & randomize
-              </span>
-            </Col>
-          </Row>
-          <Row className='mt-2 mb-5'>
-            <Col>
+              <p>
+                This submits autoscores for assignments with "Ready to Grade" status and no final score input to the LMS
+              </p>
+            </div>
+            <div className={styles.summary}>
               <h3>Summary</h3>
-              <p className='summary-data xt-med'>{assignment.summary}</p>
-            </Col>
-            <Col className='col-3 text-right mr-2'>
+              <p>{assignment.summary}</p>
+            </div>
+            <div className={styles.info}>
               <h3>Autoscore</h3>
-              <p className='summary-data xt-med float-right'>
+              <p>
                 {assignment.isUseAutoScore && <FontAwesomeIcon className='mr-2' icon={faCheck} size='lg'/>}
                 {(assignment.isUseAutoScore) ? 'Enabled' : 'Disabled'}
               </p>
-            </Col>
-          </Row>
+              <br />
+              <span className='mr-2'>
+                <input className='mr-2' type={'checkbox'} onChange={toggleHideAndRandomize} checked={isHideStudentIdentity}/>
+                Hide identity &amp; randomize
+              </span>
+            </div>
+          </div>
           <HomeworkListing isUseAutoScore={assignment.isUseAutoScore} isFetchingHomeworks={isLoadingHomeworks} students={students} studentsPerPage={15}/>
         </Fragment>
         }
