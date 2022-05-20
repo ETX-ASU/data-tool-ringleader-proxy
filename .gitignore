@@ -376,6 +376,9 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+# Project settings for JetBrains Idea line of IDEs
+.idea/
+
 # BeatPulse healthcheck temp database
 healthchecksdb
 
