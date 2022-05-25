@@ -55,6 +55,10 @@ export const onUpdateAssignment = /* GraphQL */ `
         minWordCount
         maxScore
         tableData
+        tableData1
+        tableData2
+        tableData3
+        tableData4
       }
       createdAt
       updatedAt
