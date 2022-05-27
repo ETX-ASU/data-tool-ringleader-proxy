@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Split from "react-split";
-import { Chart } from "react-google-charts";
 import { TextEditor } from "./TextEditor";
 import styles from "./HomeworkObservation.module.scss";
+import {MemoizedChart} from "../MemoizedChart";
 
 const defaultWidth = 521;
 const defaultHeight = 400;
@@ -36,7 +36,7 @@ export const HomeworkObservation = ({ objective, observations, chartType, setObs
           <p>Take a look at your graph, displayed below.</p>
           <p><strong>Note</strong>: Your chart may look different depending on the size of your screen.</p>
           <div className={styles.chartPreview}>
-            <Chart
+            <MemoizedChart
               chartType={chartType}
               data={chartData}
               height={`${height}px`}
