@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useMemo} from "react";
 import { HomeworkIntro } from "./components/HomeworkIntro/HomeworkIntro";
 import { HomeworkEditor } from "./components/HomeworkEditor/HomeworkEditor";
 import { HomeworkObservation } from "./components/HomeworkObservation/HomeworkObservation";
@@ -24,19 +24,27 @@ export const ToolHomework = ({
 
   const dataSet = toolHomeworkData.dataSet;
 
-  const tableData = dataSet === 0
-    ? JSON.parse(toolAssignmentData.tableData)
-    : JSON.parse(toolAssignmentData[`tableData${dataSet}`]);
-  tableData.cols = tableData.cols.map(({ pattern, ...col }) => {
-    if (pattern === "General") {
-      return col
-    }
+  const tableData = useMemo(
+    () => {
+      const newTableData = dataSet === 0
+        ? JSON.parse(toolAssignmentData.tableData)
+        : JSON.parse(toolAssignmentData[`tableData${dataSet}`]);
 
-    return {
-      ...col,
-      pattern
-    }
-  })
+      newTableData.cols = newTableData.cols.map(({ pattern, ...col }) => {
+        if (pattern === "General") {
+          return col
+        }
+
+        return {
+          ...col,
+          pattern
+        }
+      })
+
+      return newTableData;
+    },
+    [dataSet, toolAssignmentData],
+  );
 
   useEffect(() => {
     if (isReadOnly) {

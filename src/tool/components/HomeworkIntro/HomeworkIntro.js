@@ -32,7 +32,7 @@ export const HomeworkIntro = ({ data, objective }) => {
         </Col>
         <Col>
           <h3>Objective</h3>
-          <div className={styles.objective}>
+          <div>
             {objective}
           </div>
         </Col>
