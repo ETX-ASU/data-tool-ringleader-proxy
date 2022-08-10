@@ -34,7 +34,7 @@ export function calcAutoScore(assignment, homework) {
     return 0;
   }
 
-  return 100;
+  return calcMaxScoreForAssignment(assignment);
 }
 
 export const calculateWordCount = (text) => {
