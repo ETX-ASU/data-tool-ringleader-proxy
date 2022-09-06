@@ -61,7 +61,7 @@ function HomeworkListing(props) {
 
     switch (type) {
       case SORT_BY.name:
-        items.sort((a, b) => (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.name.localeCompare(b.name));
+        items.sort((a, b) => (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.normalizedName.localeCompare(b.normalizedName));
         break;
       case SORT_BY.autoScore:
         items.sort((a, b) => a.autoScore - b.autoScore);
@@ -77,7 +77,7 @@ function HomeworkListing(props) {
         items.sort((a, b) => {
           if (!!a.comment && !b.comment) return -1;
           if (!a.comment && !!b.comment) return 1;
-          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.name.localeCompare(b.name);
+          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.normalizedName.localeCompare(b.normalizedName);
         });
         break;
       case HOMEWORK_PROGRESS.inProgress:
@@ -87,7 +87,7 @@ function HomeworkListing(props) {
           const aVal = order.indexOf(a.homeworkStatus);
           const bVal = order.indexOf(b.homeworkStatus);
           if (aVal !== bVal) return aVal - bVal;
-          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.name.localeCompare(b.name);
+          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.normalizedName.localeCompare(b.normalizedName);
         });
         break;
       case HOMEWORK_PROGRESS.submitted:
@@ -97,7 +97,7 @@ function HomeworkListing(props) {
           const bVal = order.indexOf(b.homeworkStatus);
           if (aVal !== bVal) return aVal - bVal;
           if (a.percentCompleted !== b.percentCompleted) return a.percentCompleted - b.percentCompleted;
-          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.name.localeCompare(b.name);
+          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.normalizedName.localeCompare(b.normalizedName);
         });
         break;
       case HOMEWORK_PROGRESS.fullyGraded:
@@ -107,11 +107,11 @@ function HomeworkListing(props) {
           const bVal = order.indexOf(b.homeworkStatus);
           if (aVal !== bVal) return aVal - bVal;
           if (a.percentCompleted !== b.percentCompleted) return a.percentCompleted - b.percentCompleted;
-          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.name.localeCompare(b.name);
+          return (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.normalizedName.localeCompare(b.normalizedName);
         });
         break;
       default:
-        items.sort((a, b) => (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.name.localeCompare(b.name));
+        items.sort((a, b) => (isHideStudentIdentity) ? a.randomOrderNum - b.randomOrderNum : a.normalizedName.localeCompare(b.normalizedName));
         break;
     }
     return (direction) ? items : items.reverse();
