@@ -74,7 +74,10 @@ function StudentDashboard() {
         theHomework.homeworkStatus = getHomeworkStatus(scoreData, theHomework);
         await setHomework(theHomework);
 
-        const uiMode = (theHomework.submittedOnDate) ? UI_SCREEN_MODES.reviewHomework : UI_SCREEN_MODES.editHomework;
+        const uiMode = (theHomework.submittedOnDate && !assignment.toolAssignmentData.allowResubmission)
+          ? UI_SCREEN_MODES.reviewHomework
+          : UI_SCREEN_MODES.editHomework;
+
         dispatch(setActiveUiScreenMode(uiMode));
         setIsLoading(false);
       }

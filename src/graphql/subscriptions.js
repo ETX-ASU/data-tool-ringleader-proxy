@@ -19,9 +19,10 @@ export const onCreateAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        objective
+        allowResubmission
         minWordCount
         maxScore
+        objective
         tableData
         tableData1
         tableData2
@@ -51,9 +52,10 @@ export const onUpdateAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        objective
+        allowResubmission
         minWordCount
         maxScore
+        objective
         tableData
         tableData1
         tableData2
@@ -83,9 +85,10 @@ export const onDeleteAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        objective
+        allowResubmission
         minWordCount
         maxScore
+        objective
         tableData
         tableData1
         tableData2

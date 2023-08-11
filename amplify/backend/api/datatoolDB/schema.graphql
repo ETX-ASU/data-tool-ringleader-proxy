@@ -20,10 +20,11 @@ type Assignment @model {
   toolAssignmentData: ToolAssignmentData
 }
 
-type Homework @model
+type Homework
+  @model
   @key(
-    name: "ByStudentAndAssignment",
-    fields: ["assignmentId", "studentOwnerId"],
+    name: "ByStudentAndAssignment"
+    fields: ["assignmentId", "studentOwnerId"]
     queryField: "homeworkByStudentAndAssignment"
   ) {
   id: ID!
@@ -36,9 +37,10 @@ type Homework @model
 }
 
 type ToolAssignmentData {
-  objective: String
+  allowResubmission: Boolean
   minWordCount: Int
   maxScore: Int
+  objective: String
   tableData: String
   tableData1: String
   tableData2: String

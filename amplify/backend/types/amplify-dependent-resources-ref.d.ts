@@ -1,8 +1,8 @@
 export type AmplifyDependentResourcesAttributes = {
-    "api": {
-        "datatoolDB": {
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        }
+  "api": {
+    "datatoolDB": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string"
     }
+  }
 }

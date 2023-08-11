@@ -17,6 +17,9 @@
           "appId": "d8y8in5fp9djc",
           "type": "cicd"
         }
+      },
+      "api": {
+        "datatoolDB": {}
       }
     }
   }

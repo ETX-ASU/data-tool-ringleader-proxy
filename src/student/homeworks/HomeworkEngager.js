@@ -26,10 +26,10 @@ library.add(faCheck, faTimes);
  * Any work they do or changes or interactions they make would be recorded and the updates
  * saved to the database as necessary. */
 function HomeworkEngager(props) {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 	const {homework, assignment} = props;
 	const activeUser = useSelector(state => state.app.activeUser);
-	const [toolHomeworkData, setToolHomeworkData] = useState(Object.assign({}, homework.toolHomeworkData));
+  const [toolHomeworkData, setToolHomeworkData] = useState(Object.assign({}, homework.toolHomeworkData));
   const [activeModal, setActiveModal] = useState(null);
   const [isSubmitEnabled, setSubmitEnabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,7 +64,7 @@ function HomeworkEngager(props) {
     }
   };
 
-	async function submitHomeworkForReview() {
+  async function submitHomeworkForReview() {
     setActiveModal(null);
     setIsSubmitting(true);
 
@@ -128,22 +128,31 @@ function HomeworkEngager(props) {
   }
 
   function handleHomeworkDataChange(data) {
-	  setToolHomeworkData(data);
+    setToolHomeworkData(data);
   }
 
   function autoSave() {
-	  // TODO: Bonus. Add in method to handle automatically saving student work
+    // TODO: Bonus. Add in method to handle automatically saving student work
   }
 
   function renderModal() {
     switch (activeModal.type) {
       case MODAL_TYPES.warningBeforeHomeworkSubmission:
         return (
-          <ConfirmationModal onHide={() => setActiveModal(null)} title={'Are you sure?'} isStatic buttons={[
-            {name:'Cancel', variant:"secondary", onClick: () => setActiveModal(null)},
-            {name:'Submit', onClick:submitHomeworkForReview},
-          ]}>
-            <p>Once submitted, you cannot go back to make additional edits to your assignment.</p>
+          <ConfirmationModal
+            onHide={() => setActiveModal(null)}
+            title={'Are you sure?'}
+            isStatic
+            buttons={[
+              { name: 'Cancel', variant: 'secondary', onClick: () => setActiveModal(null) },
+              { name: 'Submit', onClick: submitHomeworkForReview },
+            ]}
+          >
+            <p>
+              {assignment.toolAssignmentData.allowResubmission
+                ? 'Your assignment will be marked as submitted, but you will be able to make additional edits.'
+                : 'Once submitted, you cannot go back to make additional edits to your assignment.'}
+            </p>
           </ConfirmationModal>
         )
 
@@ -156,8 +165,8 @@ function HomeworkEngager(props) {
           </ConfirmationModal>
         )
 
-      case MODAL_TYPES.confirmHomeworkSaved: 
-          return (
+      case MODAL_TYPES.confirmHomeworkSaved:
+        return (
           <ConfirmationModal isStatic title={'Saved!'} buttons={[
             {name:'OK', onClick:closeSaveModal},
           ]}>
@@ -173,14 +182,20 @@ function HomeworkEngager(props) {
     setActiveModal({type:MODAL_TYPES.warningBeforeHomeworkSubmission})
   }, [])
 
-	return (
-		<Fragment>
+  return (
+    <Fragment>
       {activeModal && renderModal()}
       <HeaderBar title={assignment.title} smallTitle>
-        <Button onClick={handleSaveButtonClick}>Save</Button>
-        &nbsp;
+        {!homework.submittedOnDate && (
+          <>
+            <Button onClick={handleSaveButtonClick}>Save</Button>
+            &nbsp;
+          </>
+        )}
         {isSubmitEnabled ? (
-          <Button onClick={handleSubmitButtonClick}>Submit</Button>
+          <Button onClick={handleSubmitButtonClick}>
+            {homework.submittedOnDate ? 'Resubmit' : 'Submit'}
+          </Button>
         ) : (
           <OverlayTrigger
             placement="bottom"
@@ -206,7 +221,7 @@ function HomeworkEngager(props) {
         triggerAutoSave={autoSave}
         setSubmitEnabled={setSubmitEnabled}
       />
-		</Fragment>
+    </Fragment>
 	)
 }
 
