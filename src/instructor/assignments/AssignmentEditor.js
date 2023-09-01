@@ -16,6 +16,7 @@ import ConfirmationModal from "../../app/components/ConfirmationModal";
 import {reportError} from "../../developer/DevUtils";
 import {handleConnectToLMS} from "../../lmsConnection/RingLeader";
 import { v4 as uuid } from "uuid";
+import { IGNORE_LIMITED_EDITING } from '../../config';
 
 
 function AssignmentEditor() {
@@ -161,8 +162,10 @@ function AssignmentEditor() {
             </Col>
             <Col className='col-6 d-flex flex-row-reverse'>
               <div className="custom-control custom-switch" style={{top: `6px`}}>
-                <ToggleSwitch disabled={isLimitedEditing} value={formData.isUseAutoScore}
-                              handleToggle={toggleUseAutoScore}/>
+                <ToggleSwitch
+                  disabled={isLimitedEditing && !IGNORE_LIMITED_EDITING}
+                  value={formData.isUseAutoScore}
+                  handleToggle={toggleUseAutoScore}/>
               </div>
             </Col>
           </Row>
@@ -172,7 +175,7 @@ function AssignmentEditor() {
               <p>
             <span className='mr-2'>
               <input type={'checkbox'}
-                     disabled={isLimitedEditing}
+                     disabled={isLimitedEditing && !IGNORE_LIMITED_EDITING}
                      onChange={e => setFormData({...formData, isUseAutoSubmit: e.target.checked})}
                      checked={formData.isUseAutoSubmit}/>
             </span>
@@ -186,7 +189,7 @@ function AssignmentEditor() {
       {isSubmitting && <FullscreenOverlay />}
 
       <ToolAssignment
-        isLimitedEditing={isLimitedEditing}
+        isLimitedEditing={isLimitedEditing && !IGNORE_LIMITED_EDITING}
         isUseAutoScore={formData.isUseAutoScore}
         toolAssignmentData={formData.toolAssignmentData}
         updateToolAssignmentData={handleQuizChanges}
