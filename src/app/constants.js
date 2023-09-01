@@ -14,7 +14,8 @@ export const MODAL_TYPES = {
   showBatchSubmitOptions: "showBatchSubmitOptions",
   showWaitingForGrades: "showWaitingForGrades",
   chooseLinkOrDelete: "chooseLinkOrDelete",
-  confirmHomeworkSaved: "confirmHomeworkSaved"
+  confirmHomeworkSaved: "confirmHomeworkSaved",
+  notificationBeforeSave: "notificationBeforeSave",
 }
 
 export const SORT_BY = {
