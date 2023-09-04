@@ -19,9 +19,10 @@ export const getAssignment = /* GraphQL */ `
       isArchived
       isFavorite
       toolAssignmentData {
-        objective
+        allowResubmission
         minWordCount
         maxScore
+        objective
         tableData
         tableData1
         tableData2
@@ -56,9 +57,10 @@ export const listAssignments = /* GraphQL */ `
         isArchived
         isFavorite
         toolAssignmentData {
-          objective
+          allowResubmission
           minWordCount
           maxScore
+          objective
           tableData
           tableData1
           tableData2

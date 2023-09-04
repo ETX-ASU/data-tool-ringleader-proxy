@@ -2,6 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {API, graphqlOperation} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import { v4 as uuid } from "uuid";
+import classNames from "classnames"
 
 import {createAssignment, updateAssignment} from '../../graphql/mutations';
 import {UI_SCREEN_MODES, MODAL_TYPES} from "../../app/constants";
@@ -13,6 +14,7 @@ import {getAssignment, listAssignments} from "../../graphql/queries";
 import LoadingIndicator from "../../app/components/LoadingIndicator";
 import HeaderBar from "../../app/components/HeaderBar";
 import ConfirmationModal from "../../app/components/ConfirmationModal";
+import { Select } from "../../app/components/Select";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
@@ -23,6 +25,50 @@ import styles from "./AssignmentNewOrDupe.module.scss";
 
 library.add(faCopy, faPlus);
 
+/**
+ * @param {Date} date - The Date object to format.
+ * @returns {string} The formatted date string.
+ */
+function formatDate(date) {
+  const options = { day: '2-digit', month: 'short', year: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+}
+
+/**
+ * @param {{title: string; formattedDate: string; lineItemId?: string}} assignment
+ * @param {boolean} isActive
+ * @returns {React.Element}
+ */
+const assignmentItemRenderer = ({ title, formattedDate, lineItemId }, isActive) => {
+  return (
+    <div className={classNames(styles.item, isActive && styles.active)}>
+      <div className={styles.title}>
+        {lineItemId && <span className={styles.asterisk}>*</span>}
+        {title}
+      </div>
+      <div className={styles.date}>{formattedDate || '-'}</div>
+    </div>
+  );
+};
+
+/**
+ *
+ * @param {string} searchQuery
+ * @returns {(assignment: {title: string; formattedDate: string}) => boolean}
+ */
+const assignmentFilterStrategy = (searchQuery) => {
+  const normalizedSearchQuery = searchQuery.toLowerCase();
+
+  return ({ title, formattedDate }) =>
+    title.toLowerCase().includes(normalizedSearchQuery) || formattedDate.toLowerCase().includes(normalizedSearchQuery);
+};
+
+/**
+ *
+ * @param {{title: string}} assignment
+ * @returns {string}
+ */
+const assignmentToQuery = ({ title }) => title;
 
 function AssignmentNewOrDupe() {
 	const dispatch = useDispatch();
@@ -54,7 +100,14 @@ function AssignmentNewOrDupe() {
             nextToken: nextTokenVal
           }));
         nextTokenVal = assignmentQueryResults.data.listAssignments.nextToken;
-        allAssignments.push(...assignmentQueryResults.data.listAssignments.items);
+        allAssignments.push(...assignmentQueryResults.data.listAssignments.items
+          .map((item) => ({
+            ...item,
+            timestamp: new Date(item.createdAt).getTime(),
+            formattedDate: item.createdAt ? formatDate(new Date(item.createdAt)) : null,
+          }))
+          .sort((a, b) => b.timestamp - a.timestamp),
+        );
       } while (nextTokenVal);
 
       // if (window.isDevMode) console.log("------> assignmentIds: ", allAssignments.map(a => a.id));
@@ -72,16 +125,14 @@ function AssignmentNewOrDupe() {
     dispatch(editDupedAssignment(dupedAssignmentData));
   }
 
-  async function handleSelectionMade() {
-    const selectedId = document.getElementById('assignmentSelector').value;
-
-    if (selectedId === "") {
-      setSelectedAssignment(null);
+  async function handleAssignmentSelected(assignment) {
+    if (assignment) {
+      const assignmentQueryResults = await API.graphql(graphqlOperation(getAssignment, { id: assignment.id }));
+      setSelectedAssignment(assignmentQueryResults.data.getAssignment);
       return;
     }
 
-    const assignmentQueryResults = await API.graphql(graphqlOperation(getAssignment, {id:selectedId}));
-    setSelectedAssignment(assignmentQueryResults.data.getAssignment);
+    setSelectedAssignment(null);
   }
 
   async function handleDupeAssignment(e) {
@@ -174,12 +225,16 @@ function AssignmentNewOrDupe() {
                 <h3 className={'mt-3 mb-2'}>Duplicate an assignment</h3>
                 <p>Choose an existing assignment, duplicate it, then customize it.</p>
                 <div className="form-group">
-                  <select onChange={handleSelectionMade} className="form-control" id="assignmentSelector" disabled={!assignments.length}>
-                    <option className={styles.placeholder} value="">Select an assignment</option>
-                    {assignments.map((a,i) =>
-                      <option key={i} value={a.id}>{!a.lineItemId && '*'}{a.title}</option>
-                    )}
-                  </select>
+                  {assignments.length && (
+                    <Select
+                      placeholder="Select an assignment"
+                      items={assignments}
+                      onChange={handleAssignmentSelected}
+                      itemRenderer={assignmentItemRenderer}
+                      filterStrategy={assignmentFilterStrategy}
+                      itemToQuery={assignmentToQuery}
+                    />
+                  )}
                   {!assignments.length &&
                     <h4>*You must have at least 1 existing assignment before you can duplicate anything.</h4>
                   }
@@ -201,7 +256,7 @@ function AssignmentNewOrDupe() {
             <div className={styles.separator}></div>
             <Col className={styles.column}>
               <div className={styles.actions}>
-                <Button className='align-middle' onClick={handleDupeAssignment} disabled={!assignments.length}>
+                <Button className='align-middle' onClick={handleDupeAssignment} disabled={!selectedAssignment}>
                   <FontAwesomeIcon className='btn-icon' icon={faCopy} />
                   {(!assignments.length || selectedAssignment?.lineItemId) ? 'Duplicate' : 'Recover'}
                 </Button>

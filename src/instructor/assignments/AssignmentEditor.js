@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useMemo} from 'react';
+import React, {Fragment, useState, useMemo, useRef} from 'react';
 import {API} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import {updateAssignment as updateAssignmentMutation} from '../../graphql/mutations';
@@ -16,6 +16,7 @@ import ConfirmationModal from "../../app/components/ConfirmationModal";
 import {reportError} from "../../developer/DevUtils";
 import {handleConnectToLMS} from "../../lmsConnection/RingLeader";
 import { v4 as uuid } from "uuid";
+import { IGNORE_LIMITED_EDITING } from '../../config';
 
 
 function AssignmentEditor() {
@@ -25,6 +26,7 @@ function AssignmentEditor() {
   const isLimitedEditing = useSelector(state => Boolean(state.app.homeworks?.length));
   const [activeModal, setActiveModal] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const reminderCheckboxRef = useRef(null);
 
   const canCreateAssignment = useMemo(() => {
     return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
@@ -38,7 +40,7 @@ function AssignmentEditor() {
     }
   }
 
-  async function handleUpdateBtn() {
+  async function saveAssignment() {
     // TODO: Bonus. Add mechanism to verify or perhaps create an undo mechanism, so maybe record previous state here before API call?
     if (!canCreateAssignment) return;
 
@@ -69,6 +71,14 @@ function AssignmentEditor() {
     setIsSubmitting(false);
   }
 
+  async function handleUpdateBtn() {
+    if (window.localStorage.getItem('newTabReminderSilenced')) {
+      saveAssignment();
+      return;
+    }
+
+    setActiveModal({ type:MODAL_TYPES.notificationBeforeSave });
+  }
 
   function toggleUseAutoScore(e) {
     setFormData({...formData, isUseAutoScore: !formData.isUseAutoScore, isUseAutoSubmit: false});
@@ -87,6 +97,15 @@ function AssignmentEditor() {
   function returnToViewAssignmentScreen(e) {
     setActiveModal(null);
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.viewAssignment));
+  }
+
+  function handleReminderClose() {
+    if (reminderCheckboxRef.current?.checked) {
+      window.localStorage.setItem('newTabReminderSilenced', true);
+    }
+
+    setActiveModal(null);
+    saveAssignment();
   }
 
   function renderModal() {
@@ -109,6 +128,22 @@ function AssignmentEditor() {
           ]}>
             <p>Do you want to cancel editing this assignment or continue?</p>
             <p>Canceling will lose any changes you may have made to this assignment.</p>
+          </ConfirmationModal>
+        )
+      case MODAL_TYPES.notificationBeforeSave:
+        return (
+          <ConfirmationModal 
+            isStatic
+            title="Important"
+            buttons={[{ name: 'Got it', onClick: handleReminderClose }]}
+          >
+            <p>In your LMS, we strongly recommend for you to set this Tool to open in a new tab for a better viewing experience. For example, Canvas has a checkbox labeled “open in a new tab” that you can check.</p>
+            <div className="d-flex align-items-center gap-2">
+              <input type="checkbox" id="newTabReminder" ref={reminderCheckboxRef} />
+              <label htmlFor="newTabReminder">
+                Do not show this message again
+              </label>
+            </div>
           </ConfirmationModal>
         )
       default:
@@ -161,8 +196,10 @@ function AssignmentEditor() {
             </Col>
             <Col className='col-6 d-flex flex-row-reverse'>
               <div className="custom-control custom-switch" style={{top: `6px`}}>
-                <ToggleSwitch disabled={isLimitedEditing} value={formData.isUseAutoScore}
-                              handleToggle={toggleUseAutoScore}/>
+                <ToggleSwitch
+                  disabled={isLimitedEditing && !IGNORE_LIMITED_EDITING}
+                  value={formData.isUseAutoScore}
+                  handleToggle={toggleUseAutoScore}/>
               </div>
             </Col>
           </Row>
@@ -172,7 +209,7 @@ function AssignmentEditor() {
               <p>
             <span className='mr-2'>
               <input type={'checkbox'}
-                     disabled={isLimitedEditing}
+                     disabled={isLimitedEditing && !IGNORE_LIMITED_EDITING}
                      onChange={e => setFormData({...formData, isUseAutoSubmit: e.target.checked})}
                      checked={formData.isUseAutoSubmit}/>
             </span>
@@ -186,7 +223,7 @@ function AssignmentEditor() {
       {isSubmitting && <FullscreenOverlay />}
 
       <ToolAssignment
-        isLimitedEditing={isLimitedEditing}
+        isLimitedEditing={isLimitedEditing && !IGNORE_LIMITED_EDITING}
         isUseAutoScore={formData.isUseAutoScore}
         toolAssignmentData={formData.toolAssignmentData}
         updateToolAssignmentData={handleQuizChanges}

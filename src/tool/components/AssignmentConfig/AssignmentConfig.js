@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Col, Form, Row } from "react-bootstrap";
 import { MAX_SCORE, MIN_WORD_COUNT } from "../../constants";
 import styles from "./AssignmentConfig.module.scss";
+import ToggleSwitch from '../../../app/components/ToggleSwitch';
 
 export const AssignmentConfig = ({ isReadOnly, config, onUpdate }) => {
   return (
@@ -34,6 +35,15 @@ export const AssignmentConfig = ({ isReadOnly, config, onUpdate }) => {
             onBlur={(event) =>
               onUpdate("maxScore", event.target.value || MAX_SCORE)
             }
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label>Allow resubmission</Form.Label>
+          <ToggleSwitch
+            id="allow-resubmission"
+            value={config.allowResubmission}
+            disabled={isReadOnly}
+            handleToggle={() => onUpdate('allowResubmission', !config.allowResubmission)}
           />
         </Form.Group>
       </Row>

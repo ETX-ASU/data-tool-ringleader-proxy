@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useMemo, useState} from 'react';
+import React, {Fragment, useCallback, useMemo, useRef, useState} from 'react';
 import {API} from 'aws-amplify';
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
@@ -49,12 +49,13 @@ function AssignmentCreator() {
 	const [formData, setFormData] = useState(emptyAssignment);
   const [activeModal, setActiveModal] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const reminderCheckboxRef = useRef(null);
 
   const canCreateAssignment = useMemo(() => {
     return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
   }, [formData.title, formData.toolAssignmentData.objective, formData.toolAssignmentData.tableData])
 
-  async function handleSubmitBtn() {
+  async function saveAssignment() {
     if (!canCreateAssignment) return;
 
     setIsSubmitting(true);
@@ -78,6 +79,15 @@ function AssignmentCreator() {
       reportError(error, `We're sorry. There was a problem saving your new assignment.`);
     }
     setIsSubmitting(false);
+  }
+
+  async function handleSubmitBtn() {
+    if (window.localStorage.getItem('newTabReminderSilenced')) {
+      saveAssignment();
+      return;
+    }
+
+    setActiveModal({ type:MODAL_TYPES.notificationBeforeSave });
   }
 
   function toggleUseAutoScore(e) {
@@ -104,6 +114,15 @@ function AssignmentCreator() {
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.createOrDupeAssignment))
   }
 
+  function handleReminderClose() {
+    if (reminderCheckboxRef.current?.checked) {
+      window.localStorage.setItem('newTabReminderSilenced', true);
+    }
+
+    setActiveModal(null);
+    saveAssignment();
+  }
+
   function renderModal() {
     switch (activeModal.type) {
       case MODAL_TYPES.cancelNewAssignmentEditsWarning:
@@ -122,6 +141,22 @@ function AssignmentCreator() {
             {name: 'Continue', onClick: handleReturnToCreateOrDupe},
           ]}>
             <p>Assignment has been saved! In order to access it, use this assignmentId: ${activeModal.id}</p>
+          </ConfirmationModal>
+        );
+      case MODAL_TYPES.notificationBeforeSave:
+        return (
+          <ConfirmationModal 
+            isStatic
+            title="Important"
+            buttons={[{ name: 'Got it', onClick: handleReminderClose }]}
+          >
+            <p>In your LMS, we strongly recommend for you to set this Tool to open in a new tab for a better viewing experience. For example, Canvas has a checkbox labeled “open in a new tab” that you can check.</p>
+            <div className="d-flex align-items-center gap-2">
+              <input type="checkbox" id="newTabReminder" ref={reminderCheckboxRef} />
+              <label htmlFor="newTabReminder">
+                Do not show this message again
+              </label>
+            </div>
           </ConfirmationModal>
         );
       default:
