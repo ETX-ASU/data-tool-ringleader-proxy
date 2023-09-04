@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useMemo} from 'react';
+import React, {Fragment, useState, useMemo, useRef} from 'react';
 import {API} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import {updateAssignment as updateAssignmentMutation} from '../../graphql/mutations';
@@ -26,6 +26,7 @@ function AssignmentEditor() {
   const isLimitedEditing = useSelector(state => Boolean(state.app.homeworks?.length));
   const [activeModal, setActiveModal] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const reminderCheckboxRef = useRef(null);
 
   const canCreateAssignment = useMemo(() => {
     return formData.title !== "" && formData.toolAssignmentData.objective !== "" && formData.toolAssignmentData.tableData !== ""
@@ -39,7 +40,7 @@ function AssignmentEditor() {
     }
   }
 
-  async function handleUpdateBtn() {
+  async function saveAssignment() {
     // TODO: Bonus. Add mechanism to verify or perhaps create an undo mechanism, so maybe record previous state here before API call?
     if (!canCreateAssignment) return;
 
@@ -70,6 +71,14 @@ function AssignmentEditor() {
     setIsSubmitting(false);
   }
 
+  async function handleUpdateBtn() {
+    if (window.localStorage.getItem('newTabReminderSilenced')) {
+      saveAssignment();
+      return;
+    }
+
+    setActiveModal({ type:MODAL_TYPES.notificationBeforeSave });
+  }
 
   function toggleUseAutoScore(e) {
     setFormData({...formData, isUseAutoScore: !formData.isUseAutoScore, isUseAutoSubmit: false});
@@ -88,6 +97,15 @@ function AssignmentEditor() {
   function returnToViewAssignmentScreen(e) {
     setActiveModal(null);
     dispatch(setActiveUiScreenMode(UI_SCREEN_MODES.viewAssignment));
+  }
+
+  function handleReminderClose() {
+    if (reminderCheckboxRef.current?.checked) {
+      window.localStorage.setItem('newTabReminderSilenced', true);
+    }
+
+    setActiveModal(null);
+    saveAssignment();
   }
 
   function renderModal() {
@@ -110,6 +128,22 @@ function AssignmentEditor() {
           ]}>
             <p>Do you want to cancel editing this assignment or continue?</p>
             <p>Canceling will lose any changes you may have made to this assignment.</p>
+          </ConfirmationModal>
+        )
+      case MODAL_TYPES.notificationBeforeSave:
+        return (
+          <ConfirmationModal 
+            isStatic
+            title="Important"
+            buttons={[{ name: 'Got it', onClick: handleReminderClose }]}
+          >
+            <p>In your LMS, we strongly recommend for you to set this Tool to open in a new tab for a better viewing experience. For example, Canvas has a checkbox labeled “open in a new tab” that you can check.</p>
+            <div className="d-flex align-items-center gap-2">
+              <input type="checkbox" id="newTabReminder" ref={reminderCheckboxRef} />
+              <label htmlFor="newTabReminder">
+                Do not show this message again
+              </label>
+            </div>
           </ConfirmationModal>
         )
       default:
